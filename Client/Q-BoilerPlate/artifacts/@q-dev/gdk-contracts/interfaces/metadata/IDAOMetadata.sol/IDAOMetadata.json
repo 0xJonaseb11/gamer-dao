@@ -1,0 +1,50 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IDAOMetadata",
+  "sourceName": "@q-dev/gdk-contracts/interfaces/metadata/IDAOMetadata.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "daoURI",
+          "type": "string"
+        }
+      ],
+      "name": "DAOURIChanged",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "daoURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "_daoURI",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "daoURI_",
+          "type": "string"
+        }
+      ],
+      "name": "setDAOMetadata",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

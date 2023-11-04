@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IDAOIntegration",
+  "sourceName": "@q-dev/gdk-contracts/interfaces/IDAOIntegration.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getResourceRecords",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "existingRole",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "resource",
+              "type": "string"
+            },
+            {
+              "internalType": "string[]",
+              "name": "permissions",
+              "type": "string[]"
+            }
+          ],
+          "internalType": "struct IDAOIntegration.ResourceRecords[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

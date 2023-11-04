@@ -1,0 +1,200 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IDAOParameterStorage",
+  "sourceName": "@q-dev/gdk-contracts/interfaces/IDAOParameterStorage.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "member_",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "permission_",
+          "type": "string"
+        }
+      ],
+      "name": "checkPermission",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameterName_",
+          "type": "string"
+        }
+      ],
+      "name": "getDAOParameter",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "value",
+              "type": "bytes"
+            },
+            {
+              "internalType": "enum ParameterType",
+              "name": "solidityType",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Parameter",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getDAOParameters",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "value",
+              "type": "bytes"
+            },
+            {
+              "internalType": "enum ParameterType",
+              "name": "solidityType",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Parameter[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getResource",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameterName_",
+          "type": "string"
+        }
+      ],
+      "name": "removeDAOParameter",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string[]",
+          "name": "parameterNames_",
+          "type": "string[]"
+        }
+      ],
+      "name": "removeDAOParameters",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "value",
+              "type": "bytes"
+            },
+            {
+              "internalType": "enum ParameterType",
+              "name": "solidityType",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Parameter",
+          "name": "parameter_",
+          "type": "tuple"
+        }
+      ],
+      "name": "setDAOParameter",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes",
+              "name": "value",
+              "type": "bytes"
+            },
+            {
+              "internalType": "enum ParameterType",
+              "name": "solidityType",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Parameter[]",
+          "name": "parameters_",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "setDAOParameters",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
