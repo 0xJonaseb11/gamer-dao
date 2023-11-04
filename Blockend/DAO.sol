@@ -79,5 +79,19 @@ contract DAO {
         totalSupply -= 100;
     }
 
+    function createProposal(string memory _description) public {
+        proposals.push(Proposal({
+            description: _description,
+            voteCount: 0,
+            yesVotes: 0,
+            noVotes: 0,
+            executed: false        
+        }));
+        emit ProposalCreated(proposals.length - 1, _description);
+    }
+
+    // Actual vote
+    
+
 
 }
