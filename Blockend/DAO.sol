@@ -5,7 +5,7 @@ contract DAO {
 
 // Struct to represent a proposal in the DAO	
    struct Proposal {
-	  string description;
+	string description;
     uint voteCount;
     uint yesVotes;
     uint noVotes;
@@ -112,7 +112,7 @@ contract DAO {
      proposals[_proposalId].noVotes += _tokenAmount;
 
     emit VoteCast(msg.sender, _proposalId, _tokenAmount);
-    
+
   }
   
 		// Function to execute a proposal in the DAO
