@@ -18,5 +18,12 @@ contract AirDropV1 is MerkleWhiteListed, Ownable {
     address public rewardToken;
     uint256 public rewardAmount;
     mapping(bytes32 => mapping(address => bool)) public isUserClaimed;
-    
+
+
+    // modifier
+    modifier onlyNotClaimed(address account_) {
+        require(!isUserClaimed[getMerkleRoot()][account_], 
+               "AirDropV1: account already claimed reward.");
+               _;
+    }
 }
