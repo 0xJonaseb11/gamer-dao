@@ -26,4 +26,13 @@ contract AirDropV1 is MerkleWhiteListed, Ownable {
                "AirDropV1: account already claimed reward.");
                _;
     }
+
+    // create airDrop
+    function create_airdrop(address rewardToken_, uint256 rewardAmount_, bytes32 merkleRoot_) public {
+        _setMerkleRoot(merkleRoot_);
+        rewardToken = rewardToken_;
+        rewardAmount = rewardAmount_;
+
+        emit AirDropCreated(merkleRoot_, rewardToken_, rewardAmount_);
+    }
 }
