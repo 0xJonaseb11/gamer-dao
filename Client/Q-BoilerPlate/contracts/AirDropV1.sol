@@ -46,4 +46,10 @@ contract AirDropV1 is MerkleWhiteListed, Ownable {
     }
 
 
+    // Set merkle 
+    function setMerkleRoot(bytes32 merkleRoot_) external onlyOwner {
+        _setMerkleRoot(merkleRoot_);
+    }
+
+
 }
