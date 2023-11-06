@@ -41,4 +41,10 @@ contract AirDropV2 is ACampaignAirDrop, Initializable, IDAOResource {
     }
 
 
+    // check permission
+    function checkPermission(address /*member_*/, string calldata /*permission*/) external pure returns(bool) {
+        return true;
+    }
+
+
 }
