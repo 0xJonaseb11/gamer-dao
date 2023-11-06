@@ -47,4 +47,10 @@ contract AirDropV2 is ACampaignAirDrop, Initializable, IDAOResource {
     }
 
 
+    // Get resource
+    function getResource() external pure returns(string memory) {
+        return AIR_DROP_V2_RESOURCE;
+    }
+
+
 }
