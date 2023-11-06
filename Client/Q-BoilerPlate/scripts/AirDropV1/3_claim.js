@@ -1,7 +1,7 @@
 
 const { ethers } = require("hardhat");
 const keccak256 = require("keccak256");
-const { MerkleTree } = require("merkletreejs");
+const { MerkleTree, default: MerkleTree } = require("merkletreejs");
 web3 = require("web3"); 
 const fs = require("fs");
 
@@ -14,9 +14,17 @@ async function main () {
     // attach contract instance to the deployed contract
     const contract = Airdrop_fac.attach(Airdrop);
 
-    // Getting the contract address
+    // Getting the caller address
     const accounts =  await ethers.getSigners();
     const claimAddress = accounts[0].address;
+
+    // Read and parse Merkle tree data from the "tree.json" file
+    const jsonData = fs.readFileSync("tree.json", "utf-8");
+    const data = JSON.parse(jsonData);
+    const leafNodes = data.leafNodes.map((node) => Buffer.from(node, "hex"));
+
+    // create a merkle tree from the leaf nodes
+    const MerkleTree = new MerkleTree(leafNodes, keccak256, {sortParis: true});
 
 }
 
