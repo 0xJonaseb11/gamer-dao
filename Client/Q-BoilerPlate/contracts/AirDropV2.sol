@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 // SPDX-License-Identifier: LGPL-3.0-or-later
 pragma solidity ^0.8.19;
 
@@ -28,16 +27,16 @@ contract AirDropV2 is ACampaignAirDrop, Initializable, IDAOResource {
         address rewardToken_,
         uint256 rewardAmount_,
         bytes32 merkleRoot_,
-        uint256 startTimestamp_,
-        uint256 endingTimestamp,
+        uint256 startingTimestamp_,
+        uint256 endingTimestamp_
     ) external onlyVotingContract returns (uint256) {
         return _createCampaign(rewardToken_, rewardAmount_, startingTimestamp_, endingTimestamp_, merkleRoot_ );
     }
 
 
     // claim reward
-    function claimReward(uint256 camapaignId_, address account_, bytes32[] calldata merkleProof_) external {
-        _claimReward(campaignId, account_, merkleProof_);
+    function claimReward(uint256 campaignId_, address account_, bytes32[] calldata merkleProof_) external {
+        _claimReward(campaignId_, account_, merkleProof_);
     }
 
 
