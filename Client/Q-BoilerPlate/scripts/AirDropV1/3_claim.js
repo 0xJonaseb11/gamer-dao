@@ -34,7 +34,12 @@ async function main () {
     console.log("-----------------");
     console.log(MerkleTree.toString());
 
-    
+
+    // Generate Merkle Proofs
+    // Generate Merle proofs for all leaf Nodes
+    const proofArray = leafNodes.map((node) => MerkleTree.getHexProof(node));
+
+
 
 }
 
