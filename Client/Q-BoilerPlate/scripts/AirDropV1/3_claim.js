@@ -14,7 +14,9 @@ async function main () {
     // attach contract instance to the deployed contract
     const contract = Airdrop_fac.attach(Airdrop);
 
-    
+    // Getting the contract address
+    const accounts =  await ethers.getSigners();
+    const claimAddress = accounts[0].address;
 
 }
 
