@@ -1,7 +1,7 @@
 
 const { ethers } = require("hardhat");
 const keccak256 = require("keccak256");
-const { MerkleTree, default: MerkleTree } = require("merkletreejs");
+const { MerkleTree } = require("merkletreejs");
 web3 = require("web3"); 
 const fs = require("fs");
 
@@ -57,7 +57,13 @@ async function main () {
         }
     }
 
-    
+    // Check flag
+    // If the airdrop was not claimed, print message
+    if (!isClaimed) {
+        console.log("Not a whitelisted user.");
+    }
+
+
 
 
 
