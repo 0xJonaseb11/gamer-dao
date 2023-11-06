@@ -1,72 +1,63 @@
-
 const { ethers } = require("hardhat");
 const keccak256 = require("keccak256");
 const { MerkleTree } = require("merkletreejs");
-web3 = require("web3"); 
+web3 = require('web3');
 const fs = require("fs");
 
-async function main () {
-    
-    // address of deployed aidrop contract
-    const Airdrop = "0x604d5f96Fd498647FD2C2Bf1E14E952db1409F22";
-    const Airdrop_fac = await ethers.getContractFactory("AirDropV1");
+async function main() {
+	// Define the address of the deployed Airdrop contract
+	const Airdrop = "YOUR-AIRDROP-CONTRACT-ADDRESS";
+	// Get the Contract Factory for the Airdrop contract
+	const Airdrop_fac = await ethers.getContractFactory("AirDropV1");
+	// Attach the Contract instance to the deployed Airdrop contract
+	const contract = Airdrop_fac.attach(Airdrop);
 
-    // attach contract instance to the deployed contract
-    const contract = Airdrop_fac.attach(Airdrop);
+	// Get the signer accounts (Ethereum addresses with signing capabilities)
+	const accounts = await ethers.getSigners();
+	// Get the Ethereum address of the caller (claimer)
+	const claimAddress = accounts[0].address;
 
-    // Getting the caller address
-    const accounts =  await ethers.getSigners();
-    const claimAddress = accounts[0].address;
+	// Read and parse Merkle tree data from the 'tree.json' file
+	const jsonData = fs.readFileSync('tree.json', 'utf-8');
+	const data = JSON.parse(jsonData);
+	const leafNodes = data.leafNodes.map((node) => Buffer.from(node, 'hex'));
+	// Create a Merkle tree from the leaf nodes
+	const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
 
-    // Read and parse Merkle tree data from the "tree.json" file
-    const jsonData = fs.readFileSync("tree.json", "utf-8");
-    const data = JSON.parse(jsonData);
-    const leafNodes = data.leafNodes.map((node) => Buffer.from(node, "hex"));
+	// Display the Merkle tree structure
+	console.log("---------");
+	console.log("Merkle Tree");
+	console.log("---------");
+	console.log(merkleTree.toString());
 
-    // create a merkle tree from the leaf nodes
-    const MerkleTree = new MerkleTree(leafNodes, keccak256, {sortParis: true});
+	// Generate Merkle proofs for all leaf nodes
+	const proofArray = leafNodes.map((node) =>
+	  merkleTree.getHexProof(node)
+	);
 
-    
-    // Print Merkle tree
-    // display merkle tree structure
-    console.log("-----------------");
-    console.log("Merkle Tree");
-    console.log("-----------------");
-    console.log(MerkleTree.toString());
+	console.log("Claiming Airdrop");
 
+	// Initialize a flag to track whether the airdrop has been claimed
+	let isClaimed = false;
+	// Loop through each proof and attempt to claim airdrop
+	for (let i = 0; i < proofArray.length; i++) {
+	  // Check if the caller's address is whitelisted for this proof
+	  const isWhitelisted = await contract.isWhitelistedUser(claimAddress, proofArray[i]);
+	  
+	  // If whitelisted, claim the airdrop reward
+	  if (isWhitelisted) {
+	    await contract.claimReward(claimAddress, proofArray[i]);
+	    console.log("Claimed Airdrop for address:", claimAddress);
+	    isClaimed = true; // Set the flag to true
+	    break; // Exit the loop
+	  }
+	}
 
-    // Generate Merkle Proofs
-    // Generate Merle proofs for all leaf Nodes
-    const proofArray = leafNodes.map((node) => MerkleTree.getHexProof(node));
-
-
-    // Claim airdrop
-    // initialize a flag to track whether airdrop been claimed
-    let isClaimed = false;
-
-    for(let i = 0; i < proofArray.length; i++) {
-        //check if caller's address is whitelisted
-        const isWhitelisted = await contract.isWhitelistedUser(claimAddress, proofArray[i]);
-
-        // if whitelisted, claim the airdrop
-        if (isWhitelisted) {
-            await contract.claimReward(claimAddress, proofArray[i]);
-            console.log("Claimed Airdrop for address:",claimAddress);
-            isClaimed = true; // set the flag tp true
-            break; // exit the loop
-        }
-    }
-
-    // Check flag
-    // If the airdrop was not claimed, print message
-    if (!isClaimed) {
-        console.log("Not a whitelisted user.");
-    }
-
-
-
-
+	// If the airdrop was not claimed, print a message
+  if (!isClaimed) {
+    console.log("Not a whitelisted user.");
+  }
 
 }
-
+// Call the main function to initiate the airdrop claiming process
 main();
