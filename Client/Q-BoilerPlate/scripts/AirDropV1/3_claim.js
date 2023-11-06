@@ -26,6 +26,16 @@ async function main () {
     // create a merkle tree from the leaf nodes
     const MerkleTree = new MerkleTree(leafNodes, keccak256, {sortParis: true});
 
+    
+    // Print Merkle tree
+    // display merkle tree structure
+    console.log("-----------------");
+    console.log("Merkle Tree");
+    console.log("-----------------");
+    console.log(MerkleTree.toString());
+
+    
+
 }
 
 main();
