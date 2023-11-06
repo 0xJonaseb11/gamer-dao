@@ -20,3 +20,14 @@ function buildVotingSituation(name, target) {
         },
     };
 }
+
+
+async function main (){
+    const accounts = await ethers.getSigners();
+    const senderAddress = accounts[0].address;
+
+    
+
+}
+
+main();
