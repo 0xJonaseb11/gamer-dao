@@ -34,5 +34,11 @@ contract AirDropV2 is ACampaignAirDrop, Initializable, IDAOResource {
         return _createCampaign(rewardToken_, rewardAmount_, startingTimestamp_, endingTimestamp_, merkleRoot_ );
     }
 
-    
+
+    // claim reward
+    function claimReward(uint256 camapaignId_, address account_, bytes32[] calldata merkleProof_) external {
+        _claimReward(campaignId, account_, merkleProof_);
+    }
+
+
 }
