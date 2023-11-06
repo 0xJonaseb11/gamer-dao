@@ -59,5 +59,5 @@ async function main() {
   }
 
 }
-// Call the main function to initiate the airdrop claiming process
+
 main();
