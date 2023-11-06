@@ -26,7 +26,22 @@ async function main (){
     const accounts = await ethers.getSigners();
     const senderAddress = accounts[0].address;
 
+    // clear instance
+    const VotingContract = GeneralDAOVotingFactory.attach(VOTING_CONTRACT_ADDRESS);
+    const MainDAOContract = GeneralDAOVotingFactory.attach(MAIN_DAO_VOTING_ADDRESS);
+
+    // voting situation
+    console.log("Creating Voting Situation");
+    // add a new module
+    const daoRegistrySituation = buildVotingSituation("DAORegistry", `${DAO_REGISTRY_NAME}`);
+    const moduleVoteSituation = buildVotingSituation(`${MODULE_NAME}`, `${MODULE_NAME}`);
+
     
+
+
+
+
+
 
 }
 
