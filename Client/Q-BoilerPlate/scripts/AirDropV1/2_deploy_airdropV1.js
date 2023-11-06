@@ -46,7 +46,7 @@ console.log("AirDropV1 deployed to: ", await airdrop.getAddress());
 
 await airdrop.create_airdrop(qrc20Address, dropAmt, root);
 
-console.log("Funding the Airdrop");
+console.log("Funding the Airdrop...");
 
 
 // mint tokens
