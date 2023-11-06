@@ -40,6 +40,26 @@ async function main () {
     const proofArray = leafNodes.map((node) => MerkleTree.getHexProof(node));
 
 
+    // Claim airdrop
+    // initialize a flag to track whether airdrop been claimed
+    let isClaimed = false;
+
+    for(let i = 0; i < proofArray.length; i++) {
+        //check if caller's address is whitelisted
+        const isWhitelisted = await contract.isWhitelistedUser(claimAddress, proofArray[i]);
+
+        // if whitelisted, claim the airdrop
+        if (isWhitelisted) {
+            await contract.claimReward(claimAddress, proofArray[i]);
+            console.log("Claimed Airdrop for address:",claimAddress);
+            isClaimed = true; // set the flag tp true
+            break; // exit the loop
+        }
+    }
+
+    
+
+
 
 }
 
