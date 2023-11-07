@@ -2,10 +2,6 @@
 
 App uses React, Redux, Styled Components
 
-## Prerequisites
-
-* Node.js - you can download it here https://nodejs.org/en/download/
-
 ## Prepare
 
 Log in to GitLab NPM package registry. Token could be retrieved at GitLab User Settings / Access Tokens with read_api option enabled.
@@ -24,7 +20,5 @@ Install package dependencies
   yarn start
 ```
 
-Runs the app in the development mode.
-Open http://localhost:3000 to view it in the browser.
 
 
