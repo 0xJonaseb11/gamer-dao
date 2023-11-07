@@ -5,8 +5,8 @@ require('dotenv').config();
 // Retrieving environment variables
 const { MODULE_IMPLEMENTATION, MODULE_NAME, MAIN_DAO_VOTING_ADDRESS } = process.env;
 
-// The main function for deploying the voting proposal
 async function main() {
+
   // Retrieving Ethereum accounts
   const accounts = await ethers.getSigners();
   const senderAddress = accounts[0].address;
