@@ -1,0 +1,8 @@
+---
+version: '3'
+services:
+  dapp:
+    ports:
+      - "8003:80"
+    image: "${IMAGE}"
+    restart: unless-stopped

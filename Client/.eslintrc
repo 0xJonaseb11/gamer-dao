@@ -1,0 +1,127 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "standard",
+    "plugin:react/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "simple-import-sort",
+    "import",
+    "unused-imports"
+  ],
+  "settings": {
+    "react": { "version": "detect" }
+  },
+  "globals": { "JSX": true },
+  "rules": {
+    "max-len": ["warn", {
+      "code": 120,
+      "comments": 120,
+      "ignoreUrls": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+      "ignoreRegExpLiterals": true,
+      "ignorePattern": "\\s*\"[A-Z_0-9]+\": \".*\",?"
+    }],
+    "no-console": ["warn", {
+      "allow": ["warn", "error"]
+    }],
+    "padded-blocks": "warn",
+    "no-trailing-spaces": "warn",
+    "object-curly-spacing": "warn",
+    "no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 0 }],
+    "eol-last": "warn",
+    "multiline-ternary":"warn",
+    "no-case-declarations": "off",
+    "indent": "off",
+    "semi": ["warn", "always"],
+    "quotes": ["warn", "single"],
+    "space-before-function-paren": ["warn", "always"],
+    "comma-dangle": "off",
+    "no-unused-vars": "off",
+    "object-curly-newline": ["warn", {
+      "ObjectPattern": { "multiline": true },
+      "ImportDeclaration": { "multiline": true }
+   }],
+   "node/handle-callback-err": "off",
+
+   "@typescript-eslint/indent": ["warn", 2, {
+      "SwitchCase": 1,
+      "ignoredNodes": ["TaggedTemplateExpression *"]
+    }],
+    "@typescript-eslint/no-unused-vars": ["warn", {
+      "argsIgnorePattern": "^_$"
+    }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/semi": ["warn", "always"],
+    "@typescript-eslint/member-delimiter-style": ["warn", {
+      "multiline": {
+        "delimiter": "semi",
+        "requireLast": true
+      },
+      "singleline": {
+        "delimiter": "semi",
+        "requireLast": false
+      }
+    }],
+
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react/hook-use-state": "warn",
+    "generator-star-spacing": ["warn", "after"],
+    "yield-star-spacing": ["warn", "after"],
+    "jsx-quotes": ["warn", "prefer-double"],
+    "react/jsx-closing-bracket-location": ["warn", "line-aligned"],
+    "react/jsx-equals-spacing": ["warn", "never"],
+    "react/jsx-first-prop-new-line": ["warn", "multiline"],
+    "react/jsx-fragments": ["warn", "syntax"],
+    "react/jsx-indent": ["warn", 2],
+    "react/jsx-max-props-per-line": ["warn", {
+      "maximum": { "single": 2, "multi": 1 }
+    }],
+    "react/jsx-sort-props": ["warn", {
+      "callbacksLast": true,
+      "shorthandFirst": true,
+      "noSortAlphabetically": true,
+      "reservedFirst": true
+    }],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+
+    "import/first": "warn",
+    "import/newline-after-import": "warn",
+    "import/no-duplicates": "warn",
+    "unused-imports/no-unused-imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "simple-import-sort/imports": ["warn", {
+      "groups": [
+        ["^react"],
+        ["^@?\\w"],
+        ["^(pages|components|navigation|ui|assets)(/.*|$)"],
+        ["^hooks(/.*|$)"],
+        // Parent imports (`../*`)
+        ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+        // Relative imports (`./*`)
+        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+        ["^store(/.*|$)"],
+        ["^contracts(/.*|$)"],
+        ["^(constants|utils)(/.*|$)"]
+      ]
+    }]
+  }
+}
