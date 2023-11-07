@@ -16,6 +16,20 @@ Build a gamer DAO on the Q Blockchain
  #### Build DAO using Q DAO Factory
  #### Add AirDrop Module to your DAO
 
+## We will:
+#### Be able to claim an airdrop
+#### create members
+#### Be able to give out voting power
+#### Be able to provide governance to our DAO
+#### Vote for a specific arguement 
+
+### It does actually the full functionalities of a professional DAO
+
+ ### Index
+ It will perform  the basic functionality of a proffesional DAO.
+
+ It is just develop as the interest to use different tools as many as possible as practice is recorgnized too.
+
 <hr>
 
 ### @Jonas-sebera
