@@ -152,8 +152,10 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
     function removeVotingSituation(string memory situation_) 
     external override onlyDeletePermission {
-        require(_votingSituations.remove(situation_),
-        "[QGDK-018001]-The voting situation does not exist.");
+        require(
+            _votingSituations.remove(situation_),
+        "[QGDK-018001]-The voting situation does not exist."
+        );
 
         daoParameterStorage.removeDAOParameters(
             [
@@ -171,6 +173,41 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         );
 
         emit VotingSituationRemoved(situation_);
+    }
+
+
+    /**
+    *@inheritdoc IDAVoting
+    *
+    *@dev Minimally used variables here, because of stack too deep error
+    */
+
+    function createPropoal(
+        string calldata situation_,
+        string calldata remark_,
+        string calldata calldata_,
+    ) external onlyCreateVotingPermission returns(uint256) {
+        require(
+            _votingSituations.contains(situation_,
+            "[QGDK-018002]-The voting situation does not exist, impossible to  create a proposal."
+            );
+
+            uint256 proposalId_ = proposalCount++;
+
+            DAOProposal storage newProposal = proposals[ProposaId_];
+
+            newProposal.id = proposalId_;
+            newProposal.remark = remark_;
+            newProposal.calldata = calldata_;
+            newProposal.relatedExpertPanel = targetPanel;
+            newProposal.relateVotingSituation = situation_;
+            
+            newProposal.target = daoRegistry.getContract(
+                daoParameterStorage
+                      .getDAOParameter(getVotingKey(situation_, VOTING_TARGET))
+                      .decodeString()
+            );
+        );
     }
 
 }
