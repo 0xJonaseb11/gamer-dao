@@ -129,10 +129,33 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
                 votingValues_.requiredMajority.encodeUint256(
                     getVotingKey(situation_, REQUIRED_MAJORITY)
                 ),
-                votingValues_.requiredVetoQuorum.encodeUint256(getVotingKey(situation_, REQUIRED_VETO_QUORUM)),
-                
-            ]
-        )
+                votingValues_.requiredVetoQuorum.encodeUint256(
+                    getVotingKey(situation_, REQUIRED_VETO_QUORUM)
+                ),
+                votingValues_.votingType.encodeUint256(getVotingKey(situation_, VOTING_MIN_AMOUNT)
+                ),
+                votingValues_.votingTarget.encodeString(getVotingKey(situation_,VOTING_TARGET)
+                ),
+                votingValues_.votingMinAmount.encodeUint256(getVotingKey(situation_, VOTING_MIN_AMOUNT)
+                )
+            ].asArray()
+        );
+
+        emit VotingSituationCreated(situatuon_, votingValues);
+    }
+
+
+    /**
+    *@dev Removes a voting situation from the DAO
+    *@param situation_ The name of the voting situation to remove
+    */
+
+    function removeVotingSituation(string memory situation_) 
+    external override onlyDeletePermission {
+        require(_votingSituations.remove(situation_),
+        "[QGDK-018001]-The voting situation does not exist.");
+
+        daoParameterStorage.remove
     }
 
 }
