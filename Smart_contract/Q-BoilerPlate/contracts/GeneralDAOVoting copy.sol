@@ -47,6 +47,32 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
     PermissionManager public permissionManager;
     DAOParameterStorage public daoParameterStorage;
 
-    
+    StringSet.Set internal _votingSituations;
+
+    mapping(uint256 => DAOProposal) public proposals;
+    mapping(uint256 => mapping(address => bool)) public hasUserVoted;
+    mapping(uint256 => mapping(address => bool)) public hasUserVetoed;
+
+
+    modifier onlyCreateVotingPermission() {
+        _requireVotingPermission(CREATE_VOTING_PERMISSION);
+        _;
+    }
+
+    modifier onlyVotePermission(uint256 proposalId_) {
+        _checkProposalExists(proposalId_);
+
+        if (proposals[proposalId_].params.votingType == VotingType.RESTRICTED) {
+            _checkRestriction();
+        }
+
+        _requireVotingPermission(VOTE_PERMISSION);
+        _;
+    }
+
+    modifier onlyDeletePermission() {
+        _requireVotingPermission(DELETE_PERMISSION);
+        _;
+    }
 
 }
