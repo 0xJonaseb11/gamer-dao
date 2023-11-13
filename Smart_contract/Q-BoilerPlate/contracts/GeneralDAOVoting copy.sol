@@ -87,6 +87,25 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
     votingToken = params_.votingToken;
     targetPanel = paramd_.panelName;
+
    }
+
+
+   /**
+   * @notice Inheritdoc AbstractDependant 
+   */
+
+   function setDependencies(address registryAddress_,bytes calldata)
+   public virtual override dependant {
+    daoRegistry = DAORegistry(registryAddress_);
+
+    permissionManager = PermissionManager(daoRegistry.getPermissionManager());
+    daoParameterStorage = DAOParameterStorage(
+        daoRegistry.getConfDAOStorage(targetPanel)
+    );
+    dAOVault = DAOVault(payable(daoRegistry.getDAOVaul()));
+   }
+
+   
 
 }
