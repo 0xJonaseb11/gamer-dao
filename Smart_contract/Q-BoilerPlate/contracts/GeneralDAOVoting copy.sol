@@ -106,6 +106,33 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
     dAOVault = DAOVault(payable(daoRegistry.getDAOVaul()));
    }
 
-   
+   /**
+   *@dev Initializes the DAO Voting contract with ther specified votingkeys and values
+    */
+
+    function createDAOVotingSituation(DAOVoting.InitialSituation memory conf_)
+    external override onlyCreatePermission {
+        string memory situation_ = conf_.votingSituationName;
+
+        require(_votingSituations.add(situation_), "QGDK-018000]-The voting situation already exists.");
+
+        daoParameterStorage.setDAOParameter(
+            [
+                votingValues_.votingPeriod.encodeUint256(getVotingKey(situation_, VOTING_PERIOD)),
+                votingValues_.vetoPeriod.encodeUint256(getVotingKey(situation_, VETO_PERIOD)),
+                votingValues_.proposalExecutionPeriod.encodeUint256(
+                    getVotingKey((situation_, PROPOSAL_EXECUTION_PERIOD))
+                ),
+                votingValues_.requiredQuorum.encodeUint256(
+                    getVotingKey(situation_, REQUIRED_QUORUM)
+                ),
+                votingValues_.requiredMajority.encodeUint256(
+                    getVotingKey(situation_, REQUIRED_MAJORITY)
+                ),
+                votingValues_.requiredVetoQuorum.encodeUint256(getVotingKey(situation_, REQUIRED_VETO_QUORUM)),
+                
+            ]
+        )
+    }
 
 }
