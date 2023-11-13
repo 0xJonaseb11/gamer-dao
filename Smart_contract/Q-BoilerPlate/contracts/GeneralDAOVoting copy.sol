@@ -185,7 +185,7 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
     function createPropoal(
         string calldata situation_,
         string calldata remark_,
-        string calldata calldata_,
+        string calldata callData_,
     ) external onlyCreateVotingPermission returns(uint256) {
         require(
             _votingSituations.contains(situation_,
@@ -198,7 +198,7 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
             newProposal.id = proposalId_;
             newProposal.remark = remark_;
-            newProposal.calldata = calldata_;
+            newProposal.calldata = callData_;
             newProposal.relatedExpertPanel = targetPanel;
             newProposal.relateVotingSituation = situation_;
             
@@ -206,6 +206,21 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
                 daoParameterStorage
                       .getDAOParameter(getVotingKey(situation_, VOTING_TARGET))
                       .decodeString()
+            );
+
+            require(
+                callData_.length > 0 || newProposal.target == address(this),
+                "[QGDK-018003]-The general voting must be called on the Voting Contract."
+            );
+
+            _requireResourcePermission(newProposal.target, VOTE_FOR_PERMISSION);
+
+            require(
+                daoVault.getUserVotingPower(msg.sender, votingToken) >= 
+                   daoParameterStorage
+                        .getDAOParameter(getVotingKey(situation_, VOTING_MIN_AMOUNT))
+                        .decodeUint256(),
+                    "[QGDK-018004]-The voting power is too low to create a proposal."
             );
         );
     }
