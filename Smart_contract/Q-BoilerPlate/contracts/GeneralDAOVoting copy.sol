@@ -155,7 +155,22 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         require(_votingSituations.remove(situation_),
         "[QGDK-018001]-The voting situation does not exist.");
 
-        daoParameterStorage.remove
+        daoParameterStorage.removeDAOParameters(
+            [
+                getVotingKey(situation_,VOTING_PERIOD),
+                getVotingKey(situation_, VETO_PERIOD),
+                getVotingKey(situation_, PROPOSAL_EXECUTION_PERIOD,
+                getVotingKey(situation_, REQUIRED_QUORUM),
+                getVotingKey(situation_, REQUIRED_MAJORITY),
+                getVotingKey(situation_, REQUIRED_VETO_QUORUM),
+                getVotingKey(situation_, VOTING_TYPE),
+                getVotingKey(situation_, VOTING_TARGET),
+                getVotingKey(situation_, VOTING_MIN_AMOUNT)
+
+            ].asArray()
+        );
+
+        emit VotingSituationRemoved(situation_);
     }
 
 }
