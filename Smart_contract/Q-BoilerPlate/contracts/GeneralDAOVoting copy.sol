@@ -409,6 +409,18 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
             return ProposalStatus.REJECTED;
         }
 
+        if (block.timestamp < proposal.params.vetoEndTime) {
+            return ProposalStatus.ACCEPTED;
+        }
+
+        if (
+            block.timestamp > proposal.params.vetoEndTime + proposal.params.proposalExecutionPeriod
+        ) {
+            return ProposalStatus.EXPIRED;
+        }
+
+        return ProposalStatus.PASSED;
+    }
        }
     }
 
