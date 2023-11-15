@@ -448,6 +448,19 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
      * @param situation_ The name of the voting situation.
      * @return The voting values for the given voting situation.
      */
+
+
+
+//////////////////////////////////////////////////
+/////////////// PROCEED /////////////////////////
+////////////// FROM ////////////////////////////
+///////////// HERE ////////////////////////////
+/////////////NEXT ////////////////////////////
+//////////// TIME ///////////////////////////
+
+
+
+
     function getVotingSituationInfo(
         string calldata situation_
     ) external view returns (DAOVotingValues memory) {
