@@ -337,6 +337,23 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
         emit ProposalExecuted(proposalId_);
     }
+
+        /**
+     * @dev Retrieves the proposal with the specified ID.
+     * @param proposalId_ The ID of the proposal to retrieve.
+     * @return A DAOProposal struct representing the proposal.
+     */
+    function getProposal(uint256 proposalId_) external view override returns (DAOProposal memory) {
+        return proposals[proposalId_];
+    }
+
+    /**
+     * @dev Retrieves a list of proposals.
+     * @param offset_ The offset from which to start retrieving proposals.
+     * If set to 0, the most recent proposal will be retrieved.
+     * @param limit_ The maximum number of proposals to retrieve.
+     * @return A list of DAOProposal structs representing the proposals.
+     */
        }
     }
 
