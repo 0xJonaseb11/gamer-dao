@@ -377,6 +377,38 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         return proposalList_;
     }
 
+    /**
+     * @dev Retrieves the status of the proposal with the specified ID.
+     * @param proposalId_ The ID of the proposal to retrieve the status for.
+     * @return A ProposalStatus enum value indicating the current status of the proposal.
+     */
+    function getProposalStatus(uint256 proposalId_) public view returns (ProposalStatus) {
+        DAOProposal storage proposal = proposals[proposalId_];
+
+        if (proposal.params.votingEndTime == 0) {
+            return ProposalStatus.NONE;
+        }
+
+        if (proposal.executed) {
+            return ProposalStatus.EXECUTED;
+        }
+
+        if (_isRestrictedVotingPassed(proposal)) {
+            return ProposalStatus.PASSED;
+        }
+
+        if (block.timestamp < proposal.params.votingEndTime) {
+            return ProposalStatus.PENDING;
+        }
+
+        if (
+            _getCurrentQuorum(proposal) <= proposal.params.requiredQuorum ||
+            _getCurrentMajority(proposal) <= proposal.params.requiredMajority ||
+            _getCurrentVetoQuorum(proposal) > proposal.params.requiredVetoQuorum
+        ) {
+            return ProposalStatus.REJECTED;
+        }
+
        }
     }
 
