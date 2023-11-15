@@ -297,7 +297,28 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
             "[QGDK-018006]-The proposal must be accepted to be vetoed."
         );
 
-        
+         hasUserVetoed[proposalId_][msg.sender] = true;
+
+        ++proposals[proposalId_].counters.vetoesCount;
+
+        emit UserVetoed(proposalId_, msg.sender);
+    }
+
+    /**
+     * @dev Executes the specified proposal.
+     * @param proposalId_ The ID of the proposal to execute.
+     */
+      hasUserVetoed[proposalId_][msg.sender] = true;
+
+        ++proposals[proposalId_].counters.vetoesCount;
+
+        emit UserVetoed(proposalId_, msg.sender);
+    }
+
+    /**
+     * @dev Executes the specified proposal.
+     * @param proposalId_ The ID of the proposal to execute.
+     */
 
        }
     }
