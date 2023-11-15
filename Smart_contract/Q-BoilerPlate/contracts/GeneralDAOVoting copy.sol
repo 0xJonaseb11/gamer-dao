@@ -421,6 +421,23 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
         return ProposalStatus.PASSED;
     }
+
+
+ function getProposalVotingStats(
+        uint256 proposalId_
+    ) external view returns (VotingStats memory) {
+        return
+            VotingStats(
+                proposals[proposalId_].params.requiredQuorum,
+                _getCurrentQuorum(proposals[proposalId_]),
+                proposals[proposalId_].params.requiredMajority,
+                _getCurrentMajority(proposals[proposalId_]),
+                _getCurrentVetoQuorum(proposals[proposalId_]),
+                proposals[proposalId_].params.requiredVetoQuorum
+            );
+    }
+
+
        }
     }
 
