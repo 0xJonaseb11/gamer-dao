@@ -264,6 +264,24 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
         return proposalId_;
     }
+
+
+     /**
+     * @dev Casts a vote in favor of the specified proposal.
+     * @param proposalId_ The ID of the proposal to vote for.
+     */
+    function voteFor(uint256 proposalId_) external override onlyVotePermission(proposalId_) {
+        _vote(proposalId_, VotingOption.FOR);
+    }
+
+    /**
+     * @dev Casts a vote against the specified proposal.
+     * @param proposalId_ The ID of the proposal to vote against.
+     */
+    function voteAgainst(uint256 proposalId_) external override onlyVotePermission(proposalId_) {
+        _vote(proposalId_, VotingOption.AGAINST);
+    }
+
        }
     }
 
