@@ -255,6 +255,15 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         } else {
             newProposal.params.vetoEndTime = endDate_;
         }    
+
+        newProposal.params.proposalExecutionPeriod = daoParameterStorage
+            .getDAOParameter(getVotingKey(situation_, PROPOSAL_EXECUTION_PERIOD))
+            .decodeUint256();
+
+        emit ProposalCreated(proposalId_, newProposal);
+
+        return proposalId_;
+    }
        }
     }
 
