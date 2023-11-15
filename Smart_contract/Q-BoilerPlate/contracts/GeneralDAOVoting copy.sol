@@ -223,6 +223,16 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
                     "[QGDK-018004]-The voting power is too low to create a proposal."
             );
         );
+                _requireResourcePermission(newProposal.target, VOTE_FOR_PERMISSION);
+
+
+        require(
+            daoVault.getUserVotingPower(msg.sender, votingToken) >= 
+                daoParameterStorage
+                   .getDAOParameter(getVotingKey(situation_, VOTING_MIN_AMOUNT))
+                   .decodeUint256(),
+                "[QGDK-018004]-The user voting power is too low to create a proposal."
+        );
     }
 
 }
