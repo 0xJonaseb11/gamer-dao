@@ -282,6 +282,23 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         _vote(proposalId_, VotingOption.AGAINST);
     }
 
+
+     /**
+     * @dev Vetoes the specified proposal.
+     * @param proposalId_ The ID of the proposal to veto.
+     */
+    function veto(uint256 proposalId_) external override onlyVetoPermission(proposalId_) {
+        require(
+            !hasUserVetoed[proposalId_][msg.sender],
+            "[QGDK-018005]-The eligible user has already vetoed."
+        );
+        require(
+            getProposalStatus(proposalId_) == ProposalStatus.ACCEPTED,
+            "[QGDK-018006]-The proposal must be accepted to be vetoed."
+        );
+
+        
+
        }
     }
 
