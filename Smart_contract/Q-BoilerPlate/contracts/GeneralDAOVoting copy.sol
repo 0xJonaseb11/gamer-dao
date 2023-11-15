@@ -233,6 +233,19 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
                    .decodeUint256(),
                 "[QGDK-018004]-The user voting power is too low to create a proposal."
         );
+
+        newProposal.params.votingType = _getVotingType(getVotingKey(situation_, VOTING_TYPE));
+
+       if (newProposal.params.votingType != VotingType.NON_RESTRICTED) {
+        _checkRestriction();
+
+        uint256 endDate_ = block.timestamp + 
+            daoParameterStorage
+                .getDAOParameter(getVotingKey(situation_, VOTING_PERIOD))
+                .decodeUint256();
+            
+                
+       }
     }
 
 }
