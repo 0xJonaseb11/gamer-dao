@@ -354,6 +354,22 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
      * @param limit_ The maximum number of proposals to retrieve.
      * @return A list of DAOProposal structs representing the proposals.
      */
+
+      function getProposalList(
+        uint256 offset_,
+        uint256 limit_
+    ) external view override returns (DAOProposal[] memory) {
+        if (offset_ >= proposalCount) {
+            return new DAOProposal[](0);
+        }
+
+        uint256 allocate_ = limit_;
+        if (proposalCount < offset_ + limit_) {
+            allocate_ = proposalCount - offset_;
+        }
+
+        DAOProposal[] memory proposalList_ = new DAOProposal[](allocate_);
+
        }
     }
 
