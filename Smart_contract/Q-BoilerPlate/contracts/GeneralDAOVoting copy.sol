@@ -320,6 +320,23 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
      * @param proposalId_ The ID of the proposal to execute.
      */
 
+ function executeProposal(uint256 proposalId_) external override {
+        DAOProposal storage proposal = proposals[proposalId_];
+
+        require(
+            getProposalStatus(proposalId_) == ProposalStatus.PASSED,
+            "[QGDK-018007]-The proposal must be passed to be executed."
+        );
+
+        proposal.executed = true;
+
+        if (proposal.callData.length > 0) {
+            (bool success_, ) = address(proposal.target).call(proposal.callData);
+            require(success_, "[QGDK-018008]-The proposal execution failed.");
+        }
+
+        emit ProposalExecuted(proposalId_);
+    }
        }
     }
 
