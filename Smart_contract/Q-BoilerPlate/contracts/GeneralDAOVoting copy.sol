@@ -438,6 +438,20 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
     }
 
 
+/**
+     * @dev Returns an array of all voting situations in the DAO.
+     * @return An array of all voting situations in the DAO.
+     */
+    function getVotingSituations() external view override returns (string[] memory) {
+        return _votingSituations.values();
+    }
+
+    /**
+     * @dev Returns the voting values for a given voting situation.
+     * @param situation_ The name of the voting situation.
+     * @return The voting values for the given voting situation.
+     */
+
        }
     }
 
