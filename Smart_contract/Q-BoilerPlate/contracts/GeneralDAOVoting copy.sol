@@ -370,6 +370,13 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
         DAOProposal[] memory proposalList_ = new DAOProposal[](allocate_);
 
+ for (uint256 i = 0; i < allocate_; i++) {
+            proposalList_[i] = proposals[proposalCount - 1 - offset_ - i];
+        }
+
+        return proposalList_;
+    }
+
        }
     }
 
