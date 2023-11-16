@@ -577,6 +577,14 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         return _calculatePercentage(proposal_.counters.votedFor, votesCount_);
     }
 
+ function _getCurrentMajority(
+        DAOProposal storage proposal_
+    ) internal view virtual returns (uint256) {
+        uint256 votesCount_ = proposal_.counters.votedFor + proposal_.counters.votedAgainst;
+
+        return _calculatePercentage(proposal_.counters.votedFor, votesCount_);
+    }
+
      
 
        }
