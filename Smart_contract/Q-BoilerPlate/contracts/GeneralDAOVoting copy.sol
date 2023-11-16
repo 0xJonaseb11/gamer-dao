@@ -495,6 +495,14 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
     ) external view returns (bool) {
         return permissionManager.hasPermission(member_, DAO_VOTING_RESOURCE, permission_);
     }
+    
+    /**
+     * @inheritdoc IDAOResource
+     */
+    function getResource() external view returns (string memory) {
+        return DAO_VOTING_RESOURCE;
+    }
+
 
      
 
