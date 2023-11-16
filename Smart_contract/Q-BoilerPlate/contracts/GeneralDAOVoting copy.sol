@@ -539,6 +539,15 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
             proposals[proposalId_].params.votingEndTime
         );
 
+
+        return userVotingPower_;
+    }
+
+    function _checkRestriction() internal view virtual {
+        revert("[QGDK-018012]-The restricted voting is not supported.");
+    }
+
+
      
 
        }
