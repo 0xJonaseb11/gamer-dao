@@ -527,6 +527,18 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         emit UserVoted(proposalId_, msg.sender, userVotingPower_, votingOption_);
     }
 
+    function _getAndLockUserVotingPower(uint256 proposalId_) internal virtual returns (uint256) {
+        uint256 userVotingPower_ = daoVault.getUserVotingPower(msg.sender, votingToken);
+
+        require(userVotingPower_ > 0, "[QGDK-018011]-The user has no voting power.");
+
+        daoVault.lock(
+            msg.sender,
+            votingToken,
+            userVotingPower_,
+            proposals[proposalId_].params.votingEndTime
+        );
+
      
 
        }
