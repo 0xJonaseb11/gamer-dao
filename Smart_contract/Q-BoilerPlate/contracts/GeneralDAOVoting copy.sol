@@ -503,6 +503,16 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         return DAO_VOTING_RESOURCE;
     }
 
+    function _vote(uint256 proposalId_, VotingOption votingOption_) internal {
+        require(
+            getProposalStatus(proposalId_) == ProposalStatus.PENDING,
+            "[QGDK-018009]-The proposal must be pending to be voted."
+        );
+
+        require(
+            !hasUserVoted[proposalId_][msg.sender],
+            "[QGDK-018010]-The user has already voted."
+        );
 
      
 
