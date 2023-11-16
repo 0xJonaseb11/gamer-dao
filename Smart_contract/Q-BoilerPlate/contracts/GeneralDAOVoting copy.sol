@@ -560,6 +560,14 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         return _calculatePercentage(votesCount_, daoVault.getTokenSupply(votingToken));
     }
 
+
+ function _getCurrentVetoQuorum(
+        DAOProposal storage proposal_
+    ) internal view virtual returns (uint256) {
+        uint256 vetoMembersCount_ = _getVetoMembersCount(proposal_.target);
+
+        return _calculatePercentage(proposal_.counters.vetoesCount, vetoMembersCount_);
+    }
      
 
        }
