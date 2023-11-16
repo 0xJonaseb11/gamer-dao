@@ -612,6 +612,13 @@ function _requireResourcePermission(
         return VotingType(daoParameterStorage.getDAOParameter(votingTypeKey_).decodeUint256());
     }
 
+function _calculatePercentage(uint256 part, uint256 amount) internal pure returns (uint256) {
+        if (amount == 0) {
+            return 0;
+        }
+
+        return (part * PERCENTAGE_100) / amount;
+    }
      
 
        }
