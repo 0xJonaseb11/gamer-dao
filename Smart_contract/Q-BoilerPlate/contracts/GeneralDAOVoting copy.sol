@@ -589,6 +589,14 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         require(proposalCount > proposalId_, "[QGDK-018013]-The proposal does not exist.");
     }
 
+
+ function _requireVotingPermission(string memory permission_) internal view {
+        require(
+            permissionManager.hasPermission(msg.sender, DAO_VOTING_RESOURCE, permission_),
+            "[QGDK-018014]-The sender is not allowed to perform the action, access denied."
+        );
+    }
+
      
 
        }
