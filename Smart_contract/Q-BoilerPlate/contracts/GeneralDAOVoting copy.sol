@@ -597,6 +597,16 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         );
     }
 
+
+function _requireResourcePermission(
+        address targetContract_,
+        string memory permission_
+    ) internal view {
+        require(
+            IDAOResource(targetContract_).checkPermission(msg.sender, permission_),
+            "[QGDK-018015]-The sender is not allowed to perform the action on the target, access denied."
+        );
+    }
      
 
        }
