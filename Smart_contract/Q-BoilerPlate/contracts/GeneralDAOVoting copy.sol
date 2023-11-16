@@ -619,9 +619,5 @@ function _calculatePercentage(uint256 part, uint256 amount) internal pure return
 
         return (part * PERCENTAGE_100) / amount;
     }
-     
-
-       }
-    }
 
 }
