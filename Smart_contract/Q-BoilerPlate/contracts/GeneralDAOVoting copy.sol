@@ -514,6 +514,19 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
             "[QGDK-018010]-The user has already voted."
         );
 
+         hasUserVoted[proposalId_][msg.sender] = true;
+
+        uint256 userVotingPower_ = _getAndLockUserVotingPower(proposalId_);
+
+        if (votingOption_ == VotingOption.FOR) {
+            proposals[proposalId_].counters.votedFor += userVotingPower_;
+        } else {
+            proposals[proposalId_].counters.votedAgainst += userVotingPower_;
+        }
+
+        emit UserVoted(proposalId_, msg.sender, userVotingPower_, votingOption_);
+    }
+
      
 
        }
