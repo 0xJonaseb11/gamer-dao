@@ -461,7 +461,30 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
                     .getDAOParameter(getVotingKey(situation_, VOTING_PERIOD))
                     .decodeUint256(),
                 vetoPeriod: daoParameterStorage
-
+.getDAOParameter(getVotingKey(situation_, VETO_PERIOD))
+                    .decodeUint256(),
+                proposalExecutionPeriod: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, PROPOSAL_EXECUTION_PERIOD))
+                    .decodeUint256(),
+                requiredQuorum: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, REQUIRED_QUORUM))
+                    .decodeUint256(), requiredMajority: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, REQUIRED_MAJORITY))
+                    .decodeUint256(),
+                requiredVetoQuorum: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, REQUIRED_VETO_QUORUM))
+                    .decodeUint256(),
+                votingType: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, VOTING_TYPE))
+                    .decodeUint256(),
+                votingTarget: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, VOTING_TARGET))
+                    .decodeString(),
+                votingMinAmount: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, VOTING_MIN_AMOUNT))
+                    .decodeUint256()
+            });
+    }
 
      
 
