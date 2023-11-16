@@ -547,6 +547,10 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         revert("[QGDK-018012]-The restricted voting is not supported.");
     }
 
+    function _getVetoMembersCount(address target_) internal view virtual returns (uint256) {
+        return permissionManager.getVetoMembersCount(target_);
+    }
+
 
      
 
