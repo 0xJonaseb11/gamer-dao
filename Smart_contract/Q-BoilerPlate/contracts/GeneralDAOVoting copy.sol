@@ -585,6 +585,10 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         return _calculatePercentage(proposal_.counters.votedFor, votesCount_);
     }
 
+ function _checkProposalExists(uint256 proposalId_) internal view {
+        require(proposalCount > proposalId_, "[QGDK-018013]-The proposal does not exist.");
+    }
+
      
 
        }
