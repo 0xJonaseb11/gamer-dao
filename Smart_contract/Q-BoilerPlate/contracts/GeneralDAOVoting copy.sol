@@ -452,7 +452,15 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
      * @return The voting values for the given voting situation.
      */
 
-
+    function getVotingSituationInfo(
+        string calldata situation_
+    ) external view returns (DAOVotingValues memory) {
+        return
+            DAOVotingValues({
+                votingPeriod: daoParameterStorage
+                    .getDAOParameter(getVotingKey(situation_, VOTING_PERIOD))
+                    .decodeUint256(),
+                vetoPeriod: daoParameterStorage
 
 
      
