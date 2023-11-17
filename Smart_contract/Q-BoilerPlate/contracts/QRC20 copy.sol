@@ -43,8 +43,16 @@ import "@q-dev/gdk-contracts/metadata/ContractMetadata.sol";
         __Ownable_init();
     }
 
-    modifier mintTo(address account, uint256 amount) external override onlyOwner {
-        require(totalSupplyCap == 0 || totalSupply() + amount <= totalSupplyCap, "[QGDK-015000]-The total supply capacity exceeded, minting is not allowed.");
-        
+
+    modifier onlyChangeMetadataPermission() override {
+        _checkOwner();
+        _;
     }
+
+    function mintTo(address account, uint256 amount) external override onlyOwner {
+        require(totalSupplyCap == 0 || totalSupply() + amount <= totalSupplyCap, "[QGDK-015000]-The total supply capacity exceeded, minting is not allowed.");
+        _mint(account, amount);
+    }
+
+
  }
