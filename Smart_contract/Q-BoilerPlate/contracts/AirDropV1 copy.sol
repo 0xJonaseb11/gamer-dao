@@ -10,7 +10,7 @@ import {TokenBalance} from "./libs/TokenBalance.sol";
 contract AirDropV1 is MerkleWhitelisted, Ownable {
 
     event RewardClaimed(bytes32 indexed merkleRoot, address indexed account);
-    event AirDropCreated(bytes32 indexed merkelRoot, address indexed rewaardToken, uint256 rewardAmount);
+    event AirDropCreated(bytes32 indexed merkelRoot, address indexed rewardToken, uint256 rewardAmount);
 
 
     // state variables
@@ -25,6 +25,15 @@ contract AirDropV1 is MerkleWhitelisted, Ownable {
             "AirDropV1: Account already claimed reward."
         );
         _;
+    }
+
+
+    function create_airdrop(address rewardToken_, uint256 rewardAmount_, bytes32 merkleRoot_) public {
+        _setMerkleRoot(merkleRoot_);
+        rewardToken = rewardToken_;
+        rewardAmount = rewardAmount_;
+
+        emit AirDropCreated(merkelRoot_, rewardToken_, rewardAmount_);
     }
 
     function claimReward(address account_, bytes32[] calldata MerkleProof_) external onlyWhitelistedUser(account_, merkleProof_) onlyNotClaimed(account_ ){
