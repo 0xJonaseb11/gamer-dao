@@ -20,7 +20,7 @@ import "@q-dev/gdk-contracts/metadata/ContractMetadata.sol";
 
  contract QRC20 is IQRC20, ERC20Upgradeable, ContractMetadata, OwnableUpgradeable {
     string public QRC20_RESOURCE;
-    uint256 public totalSupplyCap();
+    uint256 public totalSupplyCap;
     uint256 internal _decimals;
 
 
