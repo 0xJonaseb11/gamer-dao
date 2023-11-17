@@ -54,5 +54,17 @@ import "@q-dev/gdk-contracts/metadata/ContractMetadata.sol";
         _mint(account, amount);
     }
 
+    // burn tokens
+    function burnFrom(address account, uint256 amount) external override {
+        if (account != msg.sender) {
+            _spendAllowance(account, msg.sender, amount);
+        }
 
+        _burn(account, amount);
+    }
+
+    // get decimals for token
+    function decimals() public view returns(uint8) {
+        return _decimals;
+    }
  }
