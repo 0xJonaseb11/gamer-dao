@@ -35,3 +35,15 @@ contract AirDropV1 is MerkleWhitelisted, Ownable {
 
         emit AirDropCreated(merkelRoot_, rewardToken_, rewardAmount_);
     }
+
+    function claimReward(address account_, bytes32[] calldata MerkleProof_) external onlyWhitelistedUser(account_, merkleProof_) onlyNotClaimed(account_ ){
+        bytes32 merkleRoot_ = getMerkleRoot();
+        isUserClaimed[merkleRoot_][account_] = true;
+        TokenBalance.sendFunds(rewardToken, account_, rewardAmount);
+        emit RewardClaimed(merkleRoot_, account_);
+    }
+
+    function setMerkleRoot(bytes32 merkleRoot_) external onlyOwner {
+        _setMerkleRoot(merkleRoot_);
+    }
+}
