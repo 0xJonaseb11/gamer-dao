@@ -53,18 +53,3 @@ import "@q-dev/gdk-contracts/metadata/ContractMetadata.sol";
         require(totalSupplyCap == 0 || totalSupply() + amount <= totalSupplyCap, "[QGDK-015000]-The total supply capacity exceeded, minting is not allowed.");
         _mint(account, amount);
     }
-
-    // burn tokens
-    function burnFrom(address account, uint256 amount) external override {
-        if (account != msg.sender) {
-            _spendAllowance(account, msg.sender, amount);
-        }
-
-        _burn(account, amount);
-    }
-
-    // get decimals for token
-    function decimals() public view returns(uint8) {
-        return _decimals;
-    }
- }
