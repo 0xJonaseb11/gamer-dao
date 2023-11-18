@@ -10,5 +10,11 @@ contract DAO {
         uint noVotes;
         bool executed;
     }
-    
+
+
+    struct Member {
+        address memberAddress;
+        uint memberSince;
+        uint tokenBalance;
+    }
 }
