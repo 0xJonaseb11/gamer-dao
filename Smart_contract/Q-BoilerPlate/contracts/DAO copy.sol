@@ -29,11 +29,22 @@ contract DAO {
     Proposal[] public proposals;
     address public owner;
 
+    uint public totalSupply;
+    mapping(address => uint) public balances;
+
+
     event ProposalCreated(uint indexed proposalId, string description);
     event VoteCast(address indexed voter, uint indexed proposalId, uint tokenAmount);
     event ProposalAccepted(string message);
     event ProposalRejected(string rejected);
 
+
+    // initialize contract with constructor
+    constructor() {
+        owner = msg.sender;
+    }
+
+ 
 
 
 }
