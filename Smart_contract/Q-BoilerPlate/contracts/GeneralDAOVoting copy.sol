@@ -607,3 +607,17 @@ function _requireResourcePermission(
             "[QGDK-018015]-The sender is not allowed to perform the action on the target, access denied."
         );
     }
+
+    function _getVotingType(string memory votingTypeKey_) internal view returns (VotingType) {
+        return VotingType(daoParameterStorage.getDAOParameter(votingTypeKey_).decodeUint256());
+    }
+
+function _calculatePercentage(uint256 part, uint256 amount) internal pure returns (uint256) {
+        if (amount == 0) {
+            return 0;
+        }
+
+        return (part * PERCENTAGE_100) / amount;
+    }
+
+}
