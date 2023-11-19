@@ -121,12 +121,17 @@ contract DAO {
         proposals[_proposalId].voteCount += _tokenAmount;
         proposals[_proposalId].voteCount += _tokenAmount;
 
-        emit VoteCast(msg.sender, _proposalId, tokenAmount);
-        
+        emit VoteCast(msg.sender, _proposalId, _tokenAmount);
+
     }
 
 
- 
+    function executeProposal(uint _proposalId) public {
+        require(proposals[_proposalId].executed == false, "Proposal has already been executed");
+        require(proposals[-_proposalId].yesVotes > proposals[_proposalId].noVotes, "Do no have enough votes");
+        proposals[_proposalId].executed = true;
 
+        emit ProposalAccepted("Proposal has been accepted");
 
+    }
 }
