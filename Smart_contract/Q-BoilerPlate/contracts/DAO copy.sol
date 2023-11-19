@@ -60,7 +60,45 @@ contract DAO {
     }
 
     // remove member to DAO
-  
+    function removeMember(address _member) public {
+        require(isMember[_member] == true, "Member does not exist");
+        memberInfo[_member] = Member({
+            memberAddress: address(0),
+            memberSince: 0,
+            tokenBalance: 0
+
+        });
+
+        for (uint i; i < members.length; i++) {
+            if (members[i] == _member) {
+                members[i] == members[members.length - 1];
+                members.pop();
+                break;
+            }
+        }
+        isMember[_member] =  false;
+        balances[_member] = 0;
+        totalSupply -= 100;
+
+    }
+
+
+    // create proposal
+    function createProposal(string memory _description) public {
+        proposals.push(Proposal({
+            description : _description,
+            voteCount : 0,
+            yesVotes : 0,
+            noVotes : 0,
+            executed : false
+        }));
+
+        emit ProposalCreated(proposals.length - 1, _description);
+    }
+
+    // 
+
+
  
 
 
