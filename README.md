@@ -2,7 +2,7 @@ Author: @Jaz-3-0
 
 ![GAMER-DAO](Gamer-DAO.svg)
 
-# gamer-dao
+## gamer-dao
 
 Build a gamer DAO on the Q Blockchain
 
@@ -10,26 +10,29 @@ Build a gamer DAO on the Q Blockchain
 
 ### Our contract adds members to a DAO , remove and do some validations for the interest of voting in order to achieve monitoring.
 
-### We will create :
+### We will create
 
- #### A native DAO token
- #### Build DAO using Q DAO Factory
- #### Add AirDrop Module to your DAO
+   A native DAO token
+   Build DAO using Q DAO Factory
+  Add AirDrop Module to your DAO
 
-## We will:
+#### We will
+
 #### Be able to claim an airdrop
-#### create members
-#### Be able to give out voting power
-#### Be able to provide governance to our DAO
-#### Vote for a specific arguement 
 
-### It does actually the full functionalities of a professional DAO
+   create members
+   Be able to give out voting power
+   Be able to provide governance to our DAO
+   Vote for a specific arguement
 
- ### Index
+#### It does actually the full functionalities of a professional DAO
+
+#### Index
+
  It will perform  the basic functionality of a proffesional DAO.
 
  It is just develop as the interest to use different tools as many as possible as practice is recorgnized too.
 
-<hr>
+--------------
 
-### @Jonas-sebera
+@Jaz-3-0
