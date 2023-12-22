@@ -1,16 +1,16 @@
-### Author: @Jonas-sebera
+Author: @Jaz-3-0
 
 ![GAMER-DAO](Gamer-DAO.svg)
+
 # gamer-dao
+
 Build a gamer DAO on the Q Blockchain
 
-
-
-# About
+## About
 
 ### Our contract adds members to a DAO , remove and do some validations for the interest of voting in order to achieve monitoring.
 
- ## We will create :
+### We will create :
 
  #### A native DAO token
  #### Build DAO using Q DAO Factory
