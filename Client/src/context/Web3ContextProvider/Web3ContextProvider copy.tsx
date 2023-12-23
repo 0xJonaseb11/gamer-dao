@@ -9,6 +9,8 @@ import { Wrap } from "./styles";
 import { chainIdToNetworkMap, networkConfigsMap, ORIGIN_NETWORK_NAME } from "constants/config";
 import { PROVIDERS } from "constants/providers";
 import { Web3Context } from "./Web3ContextProvider";
+import { useMotionTemplate } from "framer-motion";
+import { defaultMaxListeners } from "events";
 
 export type Web3Data = {
   currentProvider: UseProvider;
@@ -29,4 +31,15 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadFailed, setIsLoadFailed] = useState(false);
   const [selectedProvider, setSelectedProvider] = useLocalStorage<undefined | PROVIDERS>('selectedProvider', undefined);
+
+  const providers = useMemo(
+    () => [metamaskProvider , defaultProvider],  [metamaskProvider, defaultProvider],
+  );
+
+  const currentProvider = useMemo(() => {
+    const selectProvider = providers.find(el => el?.selectedProvider === selectedProvider && el.selectedAddress);
+    return selectedProvider || defaultProvider;
+  }, [metamaskProvider, defaultProvider, selectedProvider]);
+
+  
 }
