@@ -8,9 +8,7 @@ import { Wrap } from "./styles";
 
 import { chainIdToNetworkMap, networkConfigsMap, ORIGIN_NETWORK_NAME } from "constants/config";
 import { PROVIDERS } from "constants/providers";
-import { Web3Context } from "./Web3ContextProvider";
-import { useMotionTemplate } from "framer-motion";
-import { defaultMaxListeners } from "events";
+
 
 export type Web3Data = {
   currentProvider: UseProvider;
@@ -41,5 +39,31 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
     return selectedProvider || defaultProvider;
   }, [metamaskProvider, defaultProvider, selectedProvider]);
 
+  const isRightNetwork = useMemo(() => Boolean(currentProvider?.chainId && 
+    chainIdToNetworkMap[currentProvider?.chainId]), [currentProvider]);
+
+  const initWeb3Providers = async () => {
+    try {
+      await web3.init();
+    } catch (error) {
+      ErrorHandler.processWithoutFeedback(error);
+      setIsLoadFailed(true);
+    }
+  };
   
+  const initProviderWrappers = async () => {
+    if (!web3.isWeb3Init) return;
+    setIsLoaded(false);
+    try {
+      const metamaskBrowserProvider = web3.providers.find(
+        (el: { name: PROVIDERS}) => el.name === PROVIDERS.metamask,
+      );
+      if (metamaskBrowserProvider) {
+        await metamaskProvider.init(metamaskBrowserProvider);
+      }
+      
+    }
+  }
+
+
 }
