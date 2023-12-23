@@ -10,6 +10,11 @@ import { chainIdToNetworkMap, networkConfigsMap, ORIGIN_NETWORK_NAME } from "con
 import { PROVIDERS } from "constants/providers";
 import { networkInterfaces } from "os";
 import { Provider } from "react-redux";
+import { chain } from "lodash";
+import { ProviderUserRejectedRequest } from "errors/runtime.errors";
+import { consumers } from "stream";
+import { ConstructorFragment } from "ethers/lib/utils";
+import { iteratorSymbol } from "immer/dist/internal";
 
 
 export type Web3Data = {
@@ -86,7 +91,38 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
     }
   };
 
-  const 
+  const initDefaultProvider = async (network: number) => {
+    if (!web3.isWeb3Init) return;
+    try {
+      const selectedNetworkName = chainIdToNetworkMap[network];
+      await defaultProvider.init( {name: PROVIDERS.default, instance: networkConfigsMap[selectedNetworkName].rpcUrl });
+    } catch (error) {
+      ErrorHandler.processWithoutFeedback(error);
+    }
+  };
+
+  const connect = async (provider: PROVIDERS) => {
+    const foundProvider = providers.find(item => item.selectedProvider === provider );
+    if (foundProvider && !foundProvider?.provider) {
+      await initProviderWrapper(foundProvider);
+    }
+    if (foundProvider && !foundProvider.isConnected) {
+      await foundProvider.connect();
+    }
+    setSelectedProvider(provider);
+    };
+    
+    const disconnect = () => {
+      const filteredProviders = providers.filter(item = item.item.selectedProvider !== currentProvider.selectedProvider)
+      setSelectedProvider.disconnect();
+    };
+
+    useEffect(() => {
+      initWeb3Providers();
+    }, []);
+
+    
+  }
 
 
 }
