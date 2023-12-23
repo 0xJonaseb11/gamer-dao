@@ -8,6 +8,8 @@ import { Wrap } from "./styles";
 
 import { chainIdToNetworkMap, networkConfigsMap, ORIGIN_NETWORK_NAME } from "constants/config";
 import { PROVIDERS } from "constants/providers";
+import { networkInterfaces } from "os";
+import { Provider } from "react-redux";
 
 
 export type Web3Data = {
@@ -61,9 +63,30 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
       if (metamaskBrowserProvider) {
         await metamaskProvider.init(metamaskBrowserProvider);
       }
-      
+
+      await initDefaultProvider(networkConfigsMap[ORIGIN_NETWORK_NAME].chainId);
+    } catch (error) {
+      ErrorHandler.processWithoutFeedback(error);
+      setIsLoadFailed(true);
     }
-  }
+    setIsLoaded(true);
+  };
+
+  const initProviderWrapper = async (provider: UseProvider) => {
+    if (!web3.isWeb3Init) return;
+    try {
+      const browserProvider = web3.providers.find(
+        (el: { name: PROVIDERS }) => el.name === provider.selectedProvider,
+      );
+      if (browserProvider) {
+        await provider.init(browserProvider);
+      }
+    } catch (error) {
+      ErrorHandler.processWithoutFeedback(error);
+    }
+  };
+
+  const 
 
 
 }
