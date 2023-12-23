@@ -14,4 +14,8 @@ export type Web3Data = {
   isRightNetwork: boolean;
   isWeb3Loaded: boolean;
   
-}
+  connect: (provider: PROVIDERS) => Promise<void>;
+  initDefaultProvider: (rpc: number) => Promise<void>;
+  disconnect: () => void;
+};
+
