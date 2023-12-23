@@ -15,6 +15,7 @@ import { ProviderUserRejectedRequest } from "errors/runtime.errors";
 import { consumers } from "stream";
 import { ConstructorFragment } from "ethers/lib/utils";
 import { iteratorSymbol } from "immer/dist/internal";
+import { useWeb3Context } from "./Web3ContextProvider";
 
 
 export type Web3Data = {
@@ -121,8 +122,39 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
       initWeb3Providers();
     }, []);
 
-    
-  }
+    useEffect(() => {
+      initProviderWrappers();
+    }, [web3.providers, web3.initWeb3Init]);
+
+    if (isLoadFailed) {
+      return (
+        <Wrap>
+          <div>
+            <p>Init error</p>
+            <p>Please, Refresh the page</p>
+          </div>
+        </Wrap>
+      );
+    }
+
+    return (
+      <Web3Context.Provider
+      value={{
+        currentProvider,
+        isRightNetwork,
+        isWeb3Loaded: isLoaded,
+        connect,
+        initDefaultProvider,
+        disconnect
+      }}
+      >
+      </Web3Context.Provider>
+    );
+  };
+
+  export default useWeb3Context = () => useContext(Web3Context);
+
+  export default Web3ContextProvider;
 
 
 }
