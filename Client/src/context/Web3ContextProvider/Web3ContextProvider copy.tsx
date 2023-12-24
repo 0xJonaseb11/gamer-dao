@@ -8,14 +8,9 @@ import { Wrap } from "./styles";
 
 import { chainIdToNetworkMap, networkConfigsMap, ORIGIN_NETWORK_NAME } from "constants/config";
 import { PROVIDERS } from "constants/providers";
-import { networkInterfaces } from "os";
-import { Provider } from "react-redux";
-import { chain } from "lodash";
-import { ProviderUserRejectedRequest } from "errors/runtime.errors";
-import { consumers } from "stream";
-import { ConstructorFragment } from "ethers/lib/utils";
-import { iteratorSymbol } from "immer/dist/internal";
+
 import { useWeb3Context } from "./Web3ContextProvider";
+import { current } from "@reduxjs/toolkit";
 
 
 export type Web3Data = {
@@ -114,8 +109,9 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
     };
     
     const disconnect = () => {
-      const filteredProviders = providers.filter(item = item.item.selectedProvider !== currentProvider.selectedProvider)
-      setSelectedProvider.disconnect();
+      const filteredProviders = providers.filter(item => item.selectedProvider !== currentProvider.selectedProvider);
+      setSelectedProvider(filteredProviders[0].selectedProvider);
+      currentProvider.disconnect();
     };
 
     useEffect(() => {
@@ -124,7 +120,7 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
 
     useEffect(() => {
       initProviderWrappers();
-    }, [web3.providers, web3.initWeb3Init]);
+    }, [web3.providers, web3.isWeb3Init]);
 
     if (isLoadFailed) {
       return (
@@ -148,13 +144,14 @@ const Web3ContextProvider: FC<{ children: ReactElement }>  = ({ children }) => {
         disconnect
       }}
       >
+        {children}
       </Web3Context.Provider>
     );
   };
 
-  export default useWeb3Context = () => useContext(Web3Context);
+  export const useWeb3Context = () => useContext(Web3Context);
 
   export default Web3ContextProvider;
 
 
-}
+
