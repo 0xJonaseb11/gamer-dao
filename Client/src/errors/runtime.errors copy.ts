@@ -1,3 +1,0 @@
-/**
- * General runtime errors
- */
