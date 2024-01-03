@@ -15,3 +15,13 @@ export class AirDropV2 extends BaseContractInstance<any> {
     );
   }
 }
+
+
+import { BaseContractInstance } from "@q-dev/gdk-sdk";
+import AirdropV2ABI from "artifacts/AirDropV2.json";
+import BigNumber from 'bignumber.js';
+import { ContractTransaction, providers, Signer } from 'ethers';
+
+export class AirdropV2 extends BaseContractInstance<any> {
+  
+}
