@@ -1,5 +1,3 @@
-
-
 import { BaseContractInstance } from "@q-dev/gdk-sdk";
 import AirdropV2ABI from "artifacts/AirDropV2.json";
 import BigNumber from 'bignumber.js';
