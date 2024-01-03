@@ -37,4 +37,26 @@ contract DAO {
     event VoteCast(address indexed voter, uint indexed proposalId, uint tokenAmount);
     event ProposalAccepted(string message);
     event ProposalRejected(string rejected);
+
+    // constructor to init contract with the owner
+    constructor () {
+        owner = msg.sender;
+    }
+
+    // add member to DAO
+    function addMember(address _member) public {
+        require(msg.sender == owner, "You are not the owner");
+        require (isMember[_member] == false, "Member already exists");
+        memberInfo[_member] = Member ({
+            memberAddress: _member,
+            memberSince: block.timestamp,
+            tokenBalance: 100;
+        });
+        members.push(_member);
+        isMember[_member] = true;
+        balances[_member] = 100;
+        totalSupply += 100;
+    }
+
+    
 }
