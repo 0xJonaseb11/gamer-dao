@@ -1,0 +1,128 @@
+include:
+  - project: "q-dev/infrastructure/common-ci"
+    ref: "main"
+    file: "semantic-release-basic.yml"
+
+variables:
+  IMAGE: registry.gitlab.com/q-dev/q-gdk/dao-dashboard
+
+
+
+.before_script_template:
+  before_script:
+    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/".insteadOf https://gitlab.com/
+    - go env -w GOPRIVATE=gitlab.com/${CI_PROJECT_NAMESPACE}
+
+stages:
+  - ".pre"
+  - "test"
+  - "build"
+  - "deploy"
+  - ".post"
+
+
+.host-login: &host-login
+  before_script:
+    - mkdir -p ~/.ssh
+    - ssh-keyscan $DEPLOY_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - cp $DEPLOY_KEY ~/.ssh/id_rsa
+    - cp $DEPLOY_PUBKEY ~/.ssh/id_rsa.pub
+    - chmod 600 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+
+.host-deploy-dev: &host-deploy-dev
+  script:
+    - ssh $DEPLOY_USER@$DEPLOY_HOST "cd ~/dao-dashboard-test && docker login registry.gitlab.com -u $GIT_USER -p $GIT_PASS && IMAGE="$IMAGE:$CI_COMMIT_SHA" docker-compose pull && IMAGE="$IMAGE:$CI_COMMIT_SHA" docker-compose up -d"
+
+.host-deploy-main: &host-deploy-main
+  script:
+    - ssh $DEPLOY_USER@$DEPLOY_HOST "cd ~/dao-dashboard && docker login registry.gitlab.com -u $GIT_USER -p $GIT_PASS && IMAGE="$IMAGE:$CI_COMMIT_TAG" docker-compose pull && IMAGE="$IMAGE:$CI_COMMIT_TAG" docker-compose up -d"
+
+
+test:
+  image: node:lts
+  stage: test
+  only:
+    - merge_request
+    - master
+  script:
+    - yarn config set '//gitlab.com/api/v4/packages/npm/:_authToken' $NPM_TOKEN
+    - yarn --frozen-lockfile
+    - yarn lint
+    - yarn build
+
+build:
+  image:
+    name: "gcr.io/kaniko-project/executor:v1.9.2-debug"
+    entrypoint: [""]
+  stage: build
+  only:
+    - master
+  tags:
+    - "gitlab-org-docker"
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"${CI_DEPENDENCY_PROXY_SERVER}\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+  script:
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
+      --build-arg PROXY="${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/"
+      --cache=true
+      --cache-repo="${IMAGE}/cache"
+      --build-arg BUILD_TOKEN="$NPM_TOKEN"
+      --build-arg COMMIT="${CI_COMMIT_SHA}"
+      --build-arg VERSION="$CI_COMMIT_SHA"
+      --build-arg BUILDNUM="${CI_JOB_ID}"
+      --build-arg BUILD_TOKEN="${CI_JOB_TOKEN}"
+      --build-arg USERNAME="gitlab-ci-token"
+
+build-tag:
+  image:
+    name: "gcr.io/kaniko-project/executor:v1.9.2-debug"
+    entrypoint: [""]
+  stage: build
+  only:
+    - /^v.*$/
+  tags:
+    - "gitlab-org-docker"
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"${CI_DEPENDENCY_PROXY_SERVER}\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+  script:
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
+      --build-arg PROXY="${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/"
+      --cache=true
+      --cache-repo="${IMAGE}/cache"
+      --build-arg COMMIT="${CI_COMMIT_SHA}"
+      --build-arg VERSION="$CI_COMMIT_TAG"
+      --build-arg BUILDNUM="${CI_JOB_ID}"
+      --build-arg BUILD_TOKEN="${CI_JOB_TOKEN}"
+      --build-arg USERNAME="gitlab-ci-token"
+      --build-arg APP_NAME="${APP_NAME}"
+      --build-arg APP_BASE_URL="${APP_BASE_URL}"
+
+
+
+deploy:
+  <<: [*host-login]
+  <<: [*host-deploy-dev]
+  stage: deploy
+  only:
+    - master
+
+deploy-main:
+  <<: [*host-login]
+  <<: [*host-deploy-main]
+  stage: deploy
+  only:
+    - /^v.*$/
+

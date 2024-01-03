@@ -1,0 +1,21 @@
+.Toastify__toast,
+.Toastify__toast-body {
+  padding: 0;
+  border-radius: 16px;
+}
+
+.Toastify__toast-container--top-right {
+  top: 5em;
+  z-index: 99999;
+}
+
+@media only screen and (max-width: 480px) {
+  .Toastify__toast {
+    margin-bottom: 8px;
+  }
+
+  .Toastify__toast-container {
+    width: 300px;
+    left: auto;
+  }
+}
