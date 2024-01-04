@@ -104,5 +104,18 @@ contract DAO {
     }
 
     // Not voting
+    function voteNo(uint _proposalId, uint _tokenAmount) public {
+        require(isMember[msg.sender] == true, "You must be a member to vote");
+        require(balances[msg.sender] >= _tokenAmount, "Not enough tokens to vote");
+        require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
+          votes[msg.sender][_proposalId] = true;
+          memberInfo[msg.sender].tokenBalance -= _tokenAmount;
+          proposals[_proposalId].voteCount += _tokenAmount;
+          proposals[_proposalId].noVotes += _tokenAmount;
+
+          emit VoteCast(msg.sender, _proposalId, _tokenAmount);
+    }
+
+    // EXecute a proposal in the DAO
     
 }
