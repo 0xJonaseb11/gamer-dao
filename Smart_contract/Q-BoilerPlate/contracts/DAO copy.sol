@@ -58,5 +58,25 @@ contract DAO {
         totalSupply += 100;
     }
 
-    
+    // remove member from DAO
+    function removeMember(address _member) public {
+        require(isMember[_member] == true, "Member does not exist");
+        memberInfo[_member] == Member({
+            memberAddress: address(0),
+            memberSince: 0,
+            tokenBalance: 0
+        });
+        for(uint i; i < members.length; i++) {
+            if (members[i] == _member) {
+                members[i] == members[members.length - 1];
+                members.pop();
+                break;
+            }
+        }
+        isMember[_member] = false;
+        balances[_member] = 0;
+        totalSupply -= 100;
+    }
+
+   
 }
