@@ -90,7 +90,7 @@ contract DAO {
 		
 	 // Yes voting 
 	function voteYes(uint _proposalId, uint _tokenAmount) public {
-     require(isMember[msg.sender] == true, "You should be a memeber to vote");
+     require(isMember[msg.sender] == true, "You should be a member to vote");
      require(balances[msg.sender] >= _tokenAmount, "Not enough tokens to vote");
      require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
       votes[msg.sender][_proposalId] = true;
@@ -103,7 +103,7 @@ contract DAO {
    }		
   
    function voteNo(uint _proposalId, uint _tokenAmount) public {
-    require(isMember[msg.sender] == true, "You should be a memeber to vote");
+    require(isMember[msg.sender] == true, "You should be a member to vote");
     require(balances[msg.sender] >= _tokenAmount, "Not enough tokens to vote");
     require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
      votes[msg.sender][_proposalId] = true;
@@ -120,6 +120,7 @@ contract DAO {
       require(proposals[_proposalId].executed == false, "Proposal has already been executed");
       require(proposals[_proposalId].yesVotes > proposals[_proposalId].noVotes, "Do not have enough votes");
       proposals[_proposalId].executed = true;
+
       emit ProposalAccepted("Proposal has been approved");
 }
 }
