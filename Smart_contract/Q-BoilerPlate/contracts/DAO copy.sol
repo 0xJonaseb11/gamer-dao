@@ -78,5 +78,14 @@ contract DAO {
         totalSupply -= 100;
     }
 
-   
+    // create proposal in the DAO
+    function createProposal(string memory _description) public {
+        proposals.push(Proposal({
+            description: _description,
+            voteCount: 0,
+            noVotes: 0,
+            yesVotes: 0,
+            executed: false
+        }));
+    }
 }
