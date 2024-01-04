@@ -118,10 +118,16 @@ contract DAO {
 
     // EXecute a proposal in the DAO
     function executeProposal(uint _proposalId) public {
+
+        ? (
         require(proposals[_proposalId].executed == false, "Proposal has already been executed");
         require(proposals[_proposalId].yesVotes > proposals[_proposalId].noVotes, "Do not have enought votes");
         proposals[_proposalId].executed = true;
-
+        ) 
         emit ProposalAccepted("Proposal has been approved");
+
+        : (
+            emit ProposalRejected("Proposal has been rejected");
+        )
     }
 }
