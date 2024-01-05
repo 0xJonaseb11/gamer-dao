@@ -12,5 +12,16 @@ contract AirDropV1 is MerkleWhitelisted, Ownable {
     event RewardClaimed(bytes32 indexed merkleRoot, address indexed account);
     event AirDropCreated(bytes32 indexed merkleRoot, address indexed rewardToken, uint256 rewardAmount);
 
-    // 
+    // state  variables to store reward token address, reward amount and claimed status
+    address public rewardToken;
+    uint256 public rewardAmount;
+
+    mapping(bytes32 => mapping(address => bool)) public isUserClaimed;
+
+    // modifier to check if the user has not claimed the reward
+    modifier onlyNotClaimed(address account_) {
+        require( !isUserClaimed[getMerkleRoot()][account_],
+        "AirDropV1: Account already claimed reward.");
+        _;
+    }
 }
