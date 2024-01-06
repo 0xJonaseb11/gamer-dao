@@ -50,5 +50,13 @@ contract QRC20 is IQRC20, ERC20Upgradeable, ContractMetadata, OwnableUpgradeable
         _mint(account, amount);
     }
 
-    // 
+    // Burn tokens from the specified account (eith self or with allowance)
+    function burnFrom(address account, uint256 amount) external override {
+    if (account != msg.sender) {
+        _spendAllowance(account, msg.sender, amount);
+    }
+    _burn(account, amount);
+   }
+
+
 }
