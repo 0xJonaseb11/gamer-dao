@@ -43,5 +43,12 @@ contract QRC20 is IQRC20, ERC20Upgradeable, ContractMetadata, OwnableUpgradeable
         _;
     }
 
-    
+    // Mint new tokens to the specified account (onlyOwner)
+    function mintTo(address account, uint256 amount) external override onlyOwner {
+        require(totalSupplyCap == 0 || totalSupply() + amount <= totalSupplyCap, 
+        "[QGDK-015000] - The total supply capacity exceeded, Minting is not allowed.");
+        _mint(account, amount);
+    }
+
+    // 
 }
