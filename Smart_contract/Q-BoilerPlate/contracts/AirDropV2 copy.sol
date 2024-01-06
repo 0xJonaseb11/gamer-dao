@@ -21,17 +21,22 @@ contract AirDropV2 is ACampaignAirDrop, Initializable, IDAOResource {
     // constructor
 
      // Initialize contract
-     function __AirDropV2_init(address votingContract_) public {
+    function __AirDropV2_init(address votingContract_) public {
         votingContract = votingContract_;
-     }
+    }
 
      // Create campaign
-     function createCampaign(
+    function createCampaign(
         address rewardToken_, uint256 rewardAmount_,
         bytes32 merkleRoot_, uint256 startingTimestamp_, uint256 endingTimeStamp_
-     ) external onlyVotingContract returns(uint256) {
+    ) external onlyVotingContract returns(uint256) {
         return _createCampaign(rewardToken_, rewardAmount_, startingTimestamp_, endingTimeStamp_, merkleRoot_);
-     }
+    }
 
-     
+     // Claim Reward
+    function claimReward(uint256 campaignId_, address account_, bytes32[] calldata merkleProof_) external {
+        _claimReward(campaignId_, account_, merkleProof_);
+    }
+
+    
 }
