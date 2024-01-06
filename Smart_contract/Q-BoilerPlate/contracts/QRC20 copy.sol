@@ -58,7 +58,7 @@ contract QRC20 is IQRC20, ERC20Upgradeable, ContractMetadata, OwnableUpgradeable
        _burn(account, amount);
    }
 
-   // Get the number ogf decimals for the token
+   // Get the number of decimals for the token
    function decimals() public view override returns (uint8) {
     return _decimals;
    }
