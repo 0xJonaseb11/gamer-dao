@@ -36,4 +36,12 @@ contract QRC20 is IQRC20, ERC20Upgradeable, ContractMetadata, OwnableUpgradeable
         // set contract owner
         __Ownable_init();
     }
+
+    // modifier to restrict functions that can change metadata - only to the owner
+    modifier onlyChangeMetadataPermission() override {
+        _checkOwner();
+        _;
+    }
+
+    
 }
