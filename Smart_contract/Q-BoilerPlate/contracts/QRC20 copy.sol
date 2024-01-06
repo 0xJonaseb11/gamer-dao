@@ -52,11 +52,14 @@ contract QRC20 is IQRC20, ERC20Upgradeable, ContractMetadata, OwnableUpgradeable
 
     // Burn tokens from the specified account (eith self or with allowance)
     function burnFrom(address account, uint256 amount) external override {
-    if (account != msg.sender) {
-        _spendAllowance(account, msg.sender, amount);
-    }
-    _burn(account, amount);
+       if (account != msg.sender) {
+           _spendAllowance(account, msg.sender, amount);
+       }
+       _burn(account, amount);
    }
 
-
+   // Get the number ogf decimals for the token
+   function decimals() public view override returns (uint8) {
+    return _decimals;
+   }
 }
