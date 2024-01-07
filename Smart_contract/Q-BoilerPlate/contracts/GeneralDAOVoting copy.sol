@@ -175,7 +175,45 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
      * @dev Minimally used variables here, b'coz of stack too deep error
      */
 
-    
+    function createProposal(
+        string calldata situation_, string calldata remark_, bytes calldata callData_
+        ) external onlyCreateVotingPermission returns(uint256) {
+            require(
+            _votingSituations.contains(situation_),
+            "[GDK-018002]-The voting situation does not exist, Impossible to create proposal.");
+
+            uint256 proposalId_ = proposalCount++;
+
+            DAOProposal storage newProposal = proposals[proposalId_];
+
+            newProposal.id = proposalId_;
+            newProposal.remark_ = remark_;
+            newProposal.callData = callData_;
+            newProposal.relatedExpertPanel = targetPanel;
+            newProposal.relatedVotingSituation = situation_;
+            newProposal.target = daoRegistry.getContract(
+                daoParameterStorage
+                   .getDAOParameter(getVotingKey(situation_, VOTING_TARGET)).decodeString();
+            );
+
+            require(
+                callData_.length > 0 || newProposal.target == address(this),
+                "[GDK-018003]-The general voting must be called on the Voting contract."
+            );
+            _requireResourcePermission(newProposal.target, VOTE_FOR_PERMISSION);
+
+            require(
+                daoVault.getUserVotingPower(msg.sender, votingToken) >= daoParameterStorage
+                   .getDAOParameter(getVotingKey(situation_, VOTING_MIN_AMOUNT)).decodeString(),
+                   "[GDK-018004]-The user voting power is too low to create a proposal."
+            );
+
+            newProposal.params.votingType = _getVotingType(getVotingKey(situation_, VOTING_TYPE));
+
+            IF ()
+
+
+    }
 
        
 
