@@ -53,6 +53,40 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
     mapping(uint256 => mapping(address => bool)) public hasUserVoted;
     mapping(uint256 => mapping(address => bool)) public hasUserVetoed;
 
-    
+    // Modifiers to handle permissions
+    modifier onlyCreateVotingPermission() {
+        _requireVotingPermission(CREATE_VOTING_PERMISSION);
+        _;
+    }
+
+    modifier onlyVotePermission(uint256 proposalId_) {
+        _checkProposalExists(proposalId_);
+
+        if (proposals[proposalId_].params.votingType == VotingType.RESTRICTED) {
+            _checkRestriction();
+        }
+        _requireVotingPermission(VOTE_PERMISSION);
+        _;
+    }
+
+    modifier onlyVetoPermission(uint256 proposalId_) {
+        _checkProposalExists(proposalId_);
+        _requireResourcePermission(proposals[proposalId_].target, VETO_FOR_PERMISSION);
+        _;
+    }
+
+    modifier onlyCreatePermission() {
+        _requireVotingPermission(CREATE_PERMISSION);
+        _;
+    }
+
+    modifier onlyDeletePermission() {
+        _requireVotingPermission(DELETE_PERMISSION);
+        _;
+    }
+
+    /**
+     * @notice Inititalizes the contract
+     */
 
 }
