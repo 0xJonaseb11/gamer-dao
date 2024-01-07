@@ -15,3 +15,18 @@ import { PermissionManager } from "@q-dev/gdk-contracts/DAO/PermissionManager.so
 import { DAOParameterStorage } from "@q-dev/gdk-contracts/DAO/DAOParameterStorage.sol";
 import { Parameters } from "@q-dev/gdk-contracts/libs/Parameters.sol";
 
+/**
+ * @title GeneralDAOVoting
+ * @dev Implementation of contract that manages voting for the DAO 
+ */
+
+contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
+    using ParameterCodec for *;
+    using ArrayHelper for *;
+    using ERC165Checker for address;
+    using StringSet for StringSet.Set;
+
+    // state variables
+    
+
+}
