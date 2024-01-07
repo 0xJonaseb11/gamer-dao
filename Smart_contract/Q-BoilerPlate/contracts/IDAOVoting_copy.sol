@@ -104,6 +104,18 @@ interface IDAOVoting is IDAOResource {
         bool executed;
     }
 
+    event VotingSituationCreated(string indexed name, DAOVotingValues values);
+
+    event VotingSituationRemoved(string indexed name);
+
+    event ProposalCreated(uint256 indexed id, DAOProposal proposal);
+
+    event UserVoted(uint256 indexed id, address indexed voter, uint256 votingPower, VotingOption option);
+
+    event UserVetoed(uint256 indexed id, address indexed voter);
+
+    event ProposalExecuted(uint200 indexed id);
+
     
 
 
