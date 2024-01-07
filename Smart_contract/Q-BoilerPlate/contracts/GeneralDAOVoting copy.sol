@@ -98,6 +98,19 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
         targetPanel = params_.panelName;
     }
 
+    /**
+     * Inheritdoc AbstractDependant
+     */
+
+    function setDependencies(address registryAddress_, bytes calldata)
+       public virtual override dependant {
+        daoRegistry = DAORegistry(registryAddress_);
+
+        permissionManager = PermissionManager(daoRegistry.getPermissionManager());
+        daoParameterStorage = DAOParameterStorage(daoRegistry.getConfDAOParameterStorage(targetPanel));
+        daoVault = DAOVault(payable(daoRegistry.getDAOVault()));
+    }
+
     
 
 }
