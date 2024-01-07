@@ -147,7 +147,59 @@ interface IDAOVoting is IDAOResource {
     function createProposal(string calldata situation_,string calldata remark_, bytes calldata callData_)
         external returns(uint256);
 
-        
+    /**
+     * @dev Casts a vote against in favor of the specified proposal
+     * @param proposalId_ The ID of the proposal to vote for 
+     */
 
+    function voteFor(uint256 proposalId_) external;
+
+    /**
+     * @dev Casts a vote against the specified proposal.
+     * @param proposalId_ The ID of the proposal to vote against 
+     */
+
+    function voteAgainst(uint256 proposalId_) external;
+
+    /**
+     * @dev Vetoes the specified proposal
+     * @param proposalId_ The ID of the proposal to veto 
+     */
+
+    function veto(uint256 proposalId_) external;
+
+    /**
+     * @dev Executes the specified proposal
+     * @param proposalId_ The ID of the proposal to execute 
+     */
+
+    function executeProposal(uint256 proposalId_) external;
+
+    /**
+     * @dev Retrieves the proposal with the specified ID
+     * @param proposalId_ The ID of the proposal to retrieve
+     * @return A DAOProposal struct representing the proposal 
+     */
+
+    function getProposal(uint256 proposalId_) external view returns(DAOProposal memory);
+
+    /**
+     * @dev Retrieves a list of proposals
+     * @param offset_ The offset from with to start retrieving proposals
+     * If set to 0, the most recent proposal will be retrieved
+     * 
+     * @param limit_ The maximum number of proposals to retrieve
+     * @return A list of DAOProposal structs representing the proposals 
+     */
+
+    function getProposalList (uint256 offset_, uint256 limit_) external view returns (DAOProposal[] memory);
+
+    /**
+     * @dev Retrieves the status of the proposal with the specified ID
+     * @param proposalId_ The ID of the proposal to retrieve the status for
+     * @return A ProposalStatus enum value indicating the current status of the proposal 
+     */
+
+    function getProposalStatus(uint256 proposalId_) external view returns(ProposalStatus);    
 
 }
