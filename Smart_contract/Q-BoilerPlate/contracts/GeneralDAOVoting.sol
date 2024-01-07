@@ -237,6 +237,12 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
         newProposal.params.votingType = _getVotingType(getVotingKey(situation_, VOTING_TYPE));
 
+
+
+        ///////////////////////////////////////////////
+        ///////////// RESUME HERE ////////////////////
+        /////////////////////////////////////////////
+
         if (newProposal.params.votingType != VotingType.NON_RESTRICTED) {
             _checkRestriction();
         }

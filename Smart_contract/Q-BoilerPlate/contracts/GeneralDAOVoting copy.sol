@@ -204,16 +204,58 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
 
             require(
                 daoVault.getUserVotingPower(msg.sender, votingToken) >= daoParameterStorage
-                   .getDAOParameter(getVotingKey(situation_, VOTING_MIN_AMOUNT)).decodeString(),
+                   .getDAOParameter(getVotingKey(situation_, VOTING_MIN_AMOUNT)).decodeUint256(),
                    "[GDK-018004]-The user voting power is too low to create a proposal."
             );
 
             newProposal.params.votingType = _getVotingType(getVotingKey(situation_, VOTING_TYPE));
 
-            IF ()
+            if (newProposal.params.votingType != VotingType.NON_RESTRICTED) {
+                _checkRestriction();
+            }
 
+            uint256 endDate_ = block.timestamp + daoParameterStorage
+               .getDAOParameter(getVotingKey(situation_, VOTING_PERIOD))
+               .decodeUint256();
+
+            newProposal.params.requiredQuorum = daoParameterStorage
+               .getDAOParameter(getVotingKey(situation_, REQUIRED_QUORUM))
+               .decodeUint256();
+
+            newProposal.params.requiredMajority = daoParameterStorage
+               .getDAOParameter(getVotingKey(situation_, REQUIRED_MAJORITY))
+               .decodeUint256();
+
+            newProposal.params.requiredVetoQuorum = daoParameterStorage
+               .getDAOParameter(getVotingKey(situation_, REQUIRED_VETO_QUORUM))
+               .decodeUint256();
+
+            newProposal.params.vetoEndTime = endDate_;
+
+            if  (_getVetoMembersCount(newProposal.target) > 0) {
+                newProposal.params.vetoEndTime = endDate_ + daoParameterStorage
+                   .getDAOParameter(getVotingKey(situation_, VETO_PERIOD))
+                   .decodeUint256();
+            } else {
+                newProposal.params.vetoEndTime = endDate_;
+            }  
+
+            newProposal.params.proposalExecutionPeriod = daoParameterStorage
+               .getDAOParameter(getVotingKey(situation_, PROPOSAL_EXECUTION_PERIOD))
+               .decodeUint256();
+
+               emit ProposalCreated(proposalId_, newProposal);
+
+               return proposalId_;    
 
     }
+
+    /**
+     * @dev Casts a vote in favor of the specified proposal
+     * @param proposalId_ The ID of the proposal to vote for
+     */
+
+    
 
        
 
