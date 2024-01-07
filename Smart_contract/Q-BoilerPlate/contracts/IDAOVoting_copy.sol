@@ -116,7 +116,38 @@ interface IDAOVoting is IDAOResource {
 
     event ProposalExecuted(uint200 indexed id);
 
-    
+    /**
+     * @dev Initializes the DAO Voting contract with the specified voting keys and values
+     */
+
+    function createDAOVotingSituation(IDAOVoting.InitialSituation memory conf_) external;
+
+    /**
+     * @dev Removes a voting situation from the DAO
+     * @param situation_ The name of the voting situationto remove
+     */
+
+    function removeVotingSituation(string memory situation_) external;
+
+    /**
+     * Returns an array of all voting situations in the DAO
+     * @retunr an array of all voting situations in the DAO
+     */
+
+    function getVotingSituaions() external view returns(string memory) ;
+
+    /**
+     * @dev Creates a new proposal fot the DAO
+     * @param situation_ The name of the voting situation for the proposal
+     * @param remark_ A brief description of the proposal
+     * @param calData_ The data to pass in the call to the target contract
+     * @return The ID of the new proposal
+     */
+
+    function createProposal(string calldata situation_,string calldata remark_, bytes calldata callData_)
+        external returns(uint256);
+
+        
 
 
 }
