@@ -50,7 +50,7 @@ contract DAO {
         memberInfo[_member] = Member ({
             memberAddress: _member,
             memberSince: block.timestamp,
-            tokenBalance: 100;
+            tokenBalance: 100
         });
         members.push(_member);
         isMember[_member] = true;
@@ -61,7 +61,7 @@ contract DAO {
     // remove member from DAO
     function removeMember(address _member) public {
         require(isMember[_member] == true, "Member does not exist");
-        memberInfo[_member] == Member({
+        memberInfo[_member] = Member({
             memberAddress: address(0),
             memberSince: 0,
             tokenBalance: 0
@@ -119,15 +119,15 @@ contract DAO {
     // EXecute a proposal in the DAO
     function executeProposal(uint _proposalId) public {
 
-        true ? (
+        // true ? (
         require(proposals[_proposalId].executed == false, "Proposal has already been executed");
-        require(proposals[_proposalId].yesVotes > proposals[_proposalId].noVotes, "Do not have enought votes");
+        require(proposals[_proposalId].yesVotes > proposals[_proposalId].noVotes, "Do not have enough votes");
         proposals[_proposalId].executed = true;
-        ) 
+        // )
         emit ProposalAccepted("Proposal has been approved");
 
-        : (
-            emit ProposalRejected("Proposal has been rejected");
-        )
+        // : (
+        //     emit ProposalRejected("Proposal has been rejected");
+        // )
     }
 }

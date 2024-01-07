@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity ^0.8.19;
 
-import { IDAOResource } from "@q-dev/gdk-contracts/interfaces/IDAOResource.sol";
+// import { IDAOResource } from "@q-dev/gdk-contracts/interfaces/IDAOResource.sol";
+
 
 enum VotingType {
     NON_RESTRICTED,

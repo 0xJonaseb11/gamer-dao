@@ -293,6 +293,14 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         _vote(proposalId_, VotingOption.FOR);
     }
 
+
+    /////////////////////////////////////
+    ///////// RESUME HERE //////////////
+    ///////////////////////////////////
+
+
+
+
     /**
      * @dev Casts a vote against the specified proposal.
      * @param proposalId_ The ID of the proposal to vote against.
