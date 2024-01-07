@@ -89,4 +89,15 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
      * @notice Inititalizes the contract
      */
 
+    function __DAOVoting_init(
+        IDAOVoting.ConstructorParams calldata params_, string calldata resource_
+    ) external initializer {
+        DAO_VOTING_RESOURCE = resource_;
+
+        votingToken = params_.votingToken;
+        targetPanel = params_.panelName;
+    }
+
+    
+
 }
