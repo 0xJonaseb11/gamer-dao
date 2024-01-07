@@ -255,7 +255,9 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
      * @param proposalId_ The ID of the proposal to vote for
      */
 
-    
+    function voteFor(uint256 proposalId_) external override onlyVotePermission(proposalId_) {
+        _vote(proposalId_, VotingOption.FOR);
+    }
 
        
 
