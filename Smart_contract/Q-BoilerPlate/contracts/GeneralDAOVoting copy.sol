@@ -139,6 +139,44 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
         );
 
         emit VotingSituationCreated(situation_, votingValues_);
-       }
+    }
+
+    /**
+     * @dev Removes a voting situation from the DAO
+     * @param situation_ The name of the voting situation to remove
+     */
+
+    function removeVotingSituation(string memory situation_) 
+       external override onlyDeletePermission {
+        require (_votingSituations.remove(situation_),
+        "[GDK-018001]- The voting situation does not exist.");
+
+        daoParameterStorage.removeDAOParameters(
+            [
+                getVotingKey(situation_, VOTING_PERIOD),
+                getVotingKey(situation_, VETO_PERIOD),
+                getVotingKey(situation_, VETO_PERIOD),
+                getVotingKey(situation_, PROPOSAL_EXECUTION_PERIOD),
+                getVotingKey(situation_, REQUIRED_QUORUM),
+                getVotingKey(situation_, REQUIRED_MAJORITY),
+                getVotingKey(situation_, REQUIRED_VETO_QUORUM),
+                getVotingKey(situation_, VOTING_TYPE),
+                getVotingKey(situation_, VOTING_TARGET),
+                getVotingKey(situation_, VOTING_MIN_AMOUNT)
+            ].isArray();
+        );
+
+        emit VotingSituationRemoved(situation);
+    }
+
+    /**
+     * inheritdoc IDAOVoting
+     * 
+     * @dev Minimally used variables here, b'coz of stack too deep error
+     */
+
+    
+
+       
 
 }
