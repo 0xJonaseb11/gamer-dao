@@ -7,7 +7,7 @@ import { ERC165Checker } from "@openzeppelin/contracts/utils/introspection/ERC16
 import { Globals } from "@dlsl/dev-modules/utils/Globals.sol";
 import { StrindSet } from "@dlsl/dev-modules/libs/data-structures/StringSet.sol";
 
-import { IDAOVoting } from "@q-dev/gdk-contracts/interfaces/IDAOVoting.sol";
+import { IDAOVoting } from "@q-dev/gdk-contracts/interfaces/IDAOVotingTTTTTTTTTTTTTTTTTTTTTTTTTTT.sol";
 import { Globals } from "@q-dev/gdk-contracts/core/Globals.sol";
 import { DAOVault } from "@q-dev/gdk-contracts/DAO/DAOVault.sol";
 import { DAORegistry } from "@q-dev/gdk-contracts/DAO/DAORegistry.sol";
