@@ -311,6 +311,18 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
 
         emit ProposalExecuted(proposalId_);
     }
+
+    /**
+     * @dev Retrieves the proposal with the specified ID
+     * @param proposalId_ The ID of the proposal to retrieve
+     * @return A DAOProposal struct representing the proposal
+     */
+
+    function getProposal(uint256  proposalId_) external view override returns(DAOProposal memory) {
+        return proposals[proposalId_];
+    }
+
+    
  
        
 
