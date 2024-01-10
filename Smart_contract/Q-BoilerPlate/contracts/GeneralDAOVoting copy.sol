@@ -322,7 +322,34 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
         return proposals[proposalId_];
     }
 
-    
+    /**
+     * @dev Retrieves a list of proposals
+     * @param offset_ The offset from which to start retrieving proposals
+     * 
+     * If set to 0, The most recent proposal will be retrieved
+     * @param limit_ The maximum number of proposals to retrieve
+     * @param A list of DAOProposal structs representing the proposals
+     */
+
+    function getProposalList(uint256 offset_, uint256 limit_) external view override
+       returns(DAOProposal[] memory) {
+        if (offset_ >= proposalCount) {
+            return new DAOProposal[](0);
+        }
+
+        uint256 allocate_ = limit_;
+        if (proposalCount < offset_ + limit_) {
+            allocate_ = proposalCount - offset_;
+        }
+
+        DAOProposal[] memory proposalList_ = new DAOProposal[](allocate_);
+
+        for (uint256 i = 0; i < allocate_; i++) {
+            proposalList_[i] = proposals[proposalCount - 1 - offset_ - i];
+        }
+
+        return proposalList_;
+       }
  
        
 

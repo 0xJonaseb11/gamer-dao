@@ -390,6 +390,12 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
         return proposalList_;
     }
 
+
+
+    //////////////////////////////////////////
+    ///////// RESUME HERE ///////////////////
+    ////////////////////////////////////////
+
     /**
      * @dev Retrieves the status of the proposal with the specified ID.
      * @param proposalId_ The ID of the proposal to retrieve the status for.
