@@ -350,6 +350,23 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
 
         return proposalList_;
        }
+
+       /**@dev Retrieves the status of the proposal with the specified ID
+        * @param proposalId_The ID of the proposal to retrieve the status for.
+        * @return A ProposalStatus enum value indicating the current status of the proposal
+        */
+
+       function getProposalStatus(uint256 proposalId_) public view returns(ProposalStatus) {
+        DAOProposal storage proposal = proposals[proposalId_];
+
+        if (proposal.params.votingType == 0) {
+            return ProposalStatus.NONE;
+        }
+
+        if (proposal.executed) {
+            return ProposalStatus.EXECUTED;
+        }
+       }
  
        
 
