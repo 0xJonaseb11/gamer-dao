@@ -366,6 +366,32 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
         if (proposal.executed) {
             return ProposalStatus.EXECUTED;
         }
+        
+        if (_isRestrictedVotingPassed(proposal)) {
+            return ProposalStatus.PASSED;
+        }
+
+        if (block.timestamp < proposal.params.votingEndTime) {
+            return ProposalStatus.PENDING;
+        }
+
+        IF (
+            _getCurrentQuorum(proposal) >= proposal.params.requiredQuorum ||
+            _getCurrentMajority(proposal) >= proposal.params.requiredMajority || 
+            _getCurrentVetoQuorum(proposal) > proposal.params.requiredVetoQuorum
+        ) {
+            return ProposalStatus.REJECTED;
+        }
+
+        if (block.timestamp < proposal.params.vetoEndTime) {
+            return ProposalStatus.ACCEPTED;
+        }
+
+        if (block.timestamp > proposal.params.vetoEndTime + proposal.params.proposalExecutionPeriod) {
+            return ProposalStatus.EXPIRED;
+        }
+
+        return ProposalStatus.PASSED;
        }
  
        
