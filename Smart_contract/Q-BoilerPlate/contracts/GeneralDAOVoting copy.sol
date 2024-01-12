@@ -356,7 +356,7 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
         * @return A ProposalStatus enum value indicating the current status of the proposal
         */
 
-       function getProposalStatus(uint256 proposalId_) public view returns(ProposalStatus) {
+    function getProposalStatus(uint256 proposalId_) public view returns(ProposalStatus) {
         DAOProposal storage proposal = proposals[proposalId_];
 
         if (proposal.params.votingType == 0) {
@@ -392,7 +392,22 @@ contract GenealDAOVoting is IDAOVoting, Initializable, AbstractDepandant {
         }
 
         return ProposalStatus.PASSED;
-       }
+    }
+
+    function getProposalVotingStats(uint256 proposalId_) external view returns (VotingStats memory) {
+        return 
+           VotingStats(
+            proposals[proposalId_].params.requiredQuorum,
+            _getCurrentQuorum(proposals[proposalId_]),
+            proposals[proposalId_].params.requiredMajority,
+            _getCurrentMajority(proposals[proposalId_]),
+             proposals[proposalId_].params.requiredVetoQuorum
+            _getCurrentVetoQuorum(proposals[proposalId_])
+           
+           );
+    }
+
+
  
        
 
