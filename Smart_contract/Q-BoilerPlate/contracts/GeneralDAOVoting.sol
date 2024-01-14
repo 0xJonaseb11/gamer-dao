@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
@@ -237,6 +237,12 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
         newProposal.params.votingType = _getVotingType(getVotingKey(situation_, VOTING_TYPE));
 
+
+
+        ///////////////////////////////////////////////
+        ///////////// RESUME HERE ////////////////////
+        /////////////////////////////////////////////
+
         if (newProposal.params.votingType != VotingType.NON_RESTRICTED) {
             _checkRestriction();
         }
@@ -286,6 +292,14 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
     function voteFor(uint256 proposalId_) external override onlyVotePermission(proposalId_) {
         _vote(proposalId_, VotingOption.FOR);
     }
+
+
+    /////////////////////////////////////
+    ///////// RESUME HERE //////////////
+    ///////////////////////////////////
+
+
+
 
     /**
      * @dev Casts a vote against the specified proposal.
@@ -375,6 +389,12 @@ contract GeneralDAOVoting is IDAOVoting, Initializable, AbstractDependant {
 
         return proposalList_;
     }
+
+
+
+    //////////////////////////////////////////
+    ///////// RESUME HERE ///////////////////
+    ////////////////////////////////////////
 
     /**
      * @dev Retrieves the status of the proposal with the specified ID.

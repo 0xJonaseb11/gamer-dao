@@ -1,8 +1,12 @@
+const { ethers } = require("hardhat");
+const { dotenv } = require("dotenv");
+
+
 const main = async () => {
     const DAO = await hre.ethers.getContractFactory("DAO");
     const dao = await DAO.deploy();
 
-    // awit dao.deployed();
+    await dao.deployed();
 
     console.log("DAO contract deplpoyed to:", dao.address);
 }

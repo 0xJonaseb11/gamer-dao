@@ -2,8 +2,7 @@
 pragma solidity ^0.8.19;
 
 contract DAO {
-   
-      // struct for proposal
+    // struct to present a proposal in the DAO
     struct Proposal {
         string description;
         uint voteCount;
@@ -12,7 +11,7 @@ contract DAO {
         bool executed;
     }
 
-        // struct for member
+    // struct to represent a member in the 
     struct Member {
         address memberAddress;
         uint memberSince;
@@ -21,34 +20,34 @@ contract DAO {
 
     // state variables
     address[] public members;
+    
+    mapping (address => bool) public isMember;
+    mapping (address => Member) public memberInfo;
+    mapping (address => mapping(uint => bool)) public votes;
 
-    mapping(address => bool) public isMember;
-    mapping(address => Member) public memberInfo;
-    mapping(address => mapping(uint => bool)) public votes;
-
-    Proposal[] public proposals;
+    Proposal [] public proposals;
+    
     address public owner;
 
     uint public totalSupply;
-    mapping(address => uint) public balances;
+    mapping (address => uint) public balances;
 
-
+    // events
     event ProposalCreated(uint indexed proposalId, string description);
     event VoteCast(address indexed voter, uint indexed proposalId, uint tokenAmount);
     event ProposalAccepted(string message);
     event ProposalRejected(string rejected);
 
-
-    // initialize contract with constructor
-    constructor() {
+    // constructor to init contract with the owner
+    constructor () {
         owner = msg.sender;
     }
 
     // add member to DAO
     function addMember(address _member) public {
-        require(msg.sender == owner);
-        require(isMember[_member] == false, "Member already exists");
-        memberInfo[_member]= Member({
+        require(msg.sender == owner, "You are not the owner");
+        require (isMember[_member] == false, "Member already exists");
+        memberInfo[_member] = Member ({
             memberAddress: _member,
             memberSince: block.timestamp,
             tokenBalance: 100
@@ -59,79 +58,76 @@ contract DAO {
         totalSupply += 100;
     }
 
-    // remove member to DAO
+    // remove member from DAO
     function removeMember(address _member) public {
         require(isMember[_member] == true, "Member does not exist");
         memberInfo[_member] = Member({
             memberAddress: address(0),
             memberSince: 0,
             tokenBalance: 0
-
         });
-
-        for (uint i; i < members.length; i++) {
+        for(uint i; i < members.length; i++) {
             if (members[i] == _member) {
                 members[i] == members[members.length - 1];
                 members.pop();
                 break;
             }
         }
-        isMember[_member] =  false;
+        isMember[_member] = false;
         balances[_member] = 0;
         totalSupply -= 100;
-
     }
 
-
-    // create proposal
+    // create proposal in the DAO
     function createProposal(string memory _description) public {
         proposals.push(Proposal({
-            description : _description,
-            voteCount : 0,
-            yesVotes : 0,
-            noVotes : 0,
-            executed : false
+            description: _description,
+            voteCount: 0,
+            noVotes: 0,
+            yesVotes: 0,
+            executed: false
         }));
-
         emit ProposalCreated(proposals.length - 1, _description);
     }
 
-    // yes voting
+    // Yes voting
     function voteYes(uint _proposalId, uint _tokenAmount) public {
-        require(isMember[msg.sender] == true, "You are not a member");
+        require(isMember[msg.sender] == true, "Should be a member to vote");
         require(balances[msg.sender] >= _tokenAmount, "Not enough tokens to vote");
-        require(votes[msg.sender][_proposalId] == false, "You already voted for this proposal");
-        
-        votes[msg.sender][_proposalId] = true;
-        memberInfo[msg.sender].tokenBalance -= _tokenAmount;
-        proposals[_proposalId].voteCount += _tokenAmount;
-        proposals[_proposalId].yesVotes += _tokenAmount;
+        require(votes[msg.sender][_proposalId] == false, "Member has already voted for this proposal");
+          votes[msg.sender][_proposalId] == true;
+          memberInfo[msg.sender].tokenBalance -= _tokenAmount;
+          proposals[_proposalId].voteCount += _tokenAmount;
+          proposals[_proposalId].yesVotes += _tokenAmount;
 
-        emit VoteCast(msg.sender, _proposalId, _tokenAmount);
+          emit VoteCast(msg.sender, _proposalId, _tokenAmount);
     }
 
-    // no voting
+    // No voting
     function voteNo(uint _proposalId, uint _tokenAmount) public {
-        require(isMember[msg.sender] == true, "You are not a member");
-        require(balances[msg.sender] >= -tokenAmount, "Not enough tokens to vote");
+        require(isMember[msg.sender] == true, "You must be a member to vote");
+        require(balances[msg.sender] >= _tokenAmount, "Not enough tokens to vote");
         require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
+          votes[msg.sender][_proposalId] = true;
+          memberInfo[msg.sender].tokenBalance -= _tokenAmount;
+          proposals[_proposalId].voteCount += _tokenAmount;
+          proposals[_proposalId].noVotes += _tokenAmount;
 
-        votes[msg.sender][_proposalId] = true;
-        memberInfo[msg.sender].tokenBalance -= _tokenAmount;
-        proposals[_proposalId].voteCount += _tokenAmount;
-        proposals[_proposalId].voteCount += _tokenAmount;
-
-        emit VoteCast(msg.sender, _proposalId, _tokenAmount);
-
+          emit VoteCast(msg.sender, _proposalId, _tokenAmount);
     }
 
-
+    // EXecute a proposal in the DAO
     function executeProposal(uint _proposalId) public {
+
+        // true ? (
         require(proposals[_proposalId].executed == false, "Proposal has already been executed");
-        require(proposals[-_proposalId].yesVotes > proposals[_proposalId].noVotes, "Do no have enough votes");
+        require(proposals[_proposalId].yesVotes > proposals[_proposalId].noVotes, "Do not have enough votes");
         proposals[_proposalId].executed = true;
+        // )
+        emit ProposalAccepted("Proposal has been approved");
 
-        emit ProposalAccepted("Proposal has been accepted");
-
+        // : (
+        //     emit ProposalRejected("Proposal has been rejected");
+        // )
     }
 }
