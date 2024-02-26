@@ -31,6 +31,6 @@
   },
   "devDependencies": {
     "@dlsl/hardhat-migrate": "^1.5.5",
-    "hardhat": "^2.19.0"
+    "hardhat": "^2.20.1"
   }
 }
