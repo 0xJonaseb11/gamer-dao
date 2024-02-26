@@ -1,4 +1,6 @@
-Author: @Jaz-3-0
+# Gamer DAO
+
+_**Author: @Jaz-3-0**_
 
 ![GAMER-DAO](Gamer-DAO.svg)
 
