@@ -8,6 +8,7 @@ require('web3')
 
 
 const dotenv = require("dotenv");
+const { version } = require("os");
 dotenv.config();
 
 function privateKey() {
@@ -25,6 +26,10 @@ function forceTypechain() {
 }
 
 module.exports = {
+  solidity: {
+    version: '0.8.19',
+    defaultNetwork: 'testnet',
+  },
   networks: {
     hardhat: {
       initialDate: "1970-01-01T00:00:00Z",

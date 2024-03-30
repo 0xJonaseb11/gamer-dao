@@ -4,20 +4,17 @@ import { SegmentedButton } from '@q-dev/q-ui-kit';
 import { useWeb3Context } from 'context/Web3ContextProvider';
 import { ErrorHandler } from 'helpers';
 
-import { useProviderStore } from 'store/provider/hooks';
-
-import { connectorParametersMap, networkConfigsMap } from 'constants/config';
-import { PROVIDERS } from 'constants/providers';
-
 import { StyledCustom } from 'components/styles';
 
+import { useProviderStore } from 'store/provider/hooks';
+
+import { connectorParametersMap } from 'constants/config';
+import { PROVIDERS } from 'constants/providers';
 
 function Network () {
   const { currentProvider } = useProviderStore();
   const { t } = useTranslation();
   const { initDefaultProvider } = useWeb3Context();
-
- 
 
   const networkOptions = [
     { value: 35443, label: t('TESTNET') },
@@ -38,11 +35,11 @@ function Network () {
   };
 
   return <StyledCustom>
-  <SegmentedButton
-    value={Number(currentProvider?.chainId)}
-    options={networkOptions}
-    onChange={handleChangeNetwork}
-  />
+    <SegmentedButton
+      value={Number(currentProvider?.chainId)}
+      options={networkOptions}
+      onChange={handleChangeNetwork}
+    />
   </StyledCustom>;
 }
 

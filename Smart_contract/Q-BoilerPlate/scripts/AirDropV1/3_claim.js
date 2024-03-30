@@ -6,7 +6,7 @@ const fs = require("fs");
 
 async function main() {
 	// Define the address of the deployed Airdrop contract
-	const Airdrop = "YOUR-AIRDROP-CONTRACT-ADDRESS";
+	const Airdrop = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 	// Get the Contract Factory for the Airdrop contract
 	const Airdrop_fac = await ethers.getContractFactory("AirDropV1");
 	// Attach the Contract instance to the deployed Airdrop contract

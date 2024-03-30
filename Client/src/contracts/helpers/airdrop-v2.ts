@@ -1,10 +1,12 @@
 import { ContractTransaction } from 'ethers';
 
+import { AirDropV2 } from '../AirDropV2';
+import { daoInstance } from '../contract-instance';
+
 import { getState } from 'store';
 
-import { AirDropV2 } from 'contracts/AirDropV2';
-import { daoInstance } from 'contracts/contract-instance';
 interface ClaimParameters {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   index: any;
   address: string;
   proof: string[];

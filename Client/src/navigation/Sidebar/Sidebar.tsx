@@ -5,8 +5,6 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from 'assets/img/logo.png';
 import Network from 'navigation/Header/components/Network';
 
-import packageJson from '../../../package.json';
-
 import SidebarLink from './components/SidebarLink/SidebarLink';
 import VersionModal from './components/VersionModal';
 import { SidebarContainer } from './styles';
@@ -67,13 +65,8 @@ function Sidebar ({ open, onClose }: { open: boolean; onClose: () => void }) {
                 icon="vote"
               />
             </div>}
-
-           
           </div>
         </div>
-
-        
-
         <VersionModal open={versionModalOpen} onClose={() => setVersionModalOpen(false)} />
       </div>
     </SidebarContainer>

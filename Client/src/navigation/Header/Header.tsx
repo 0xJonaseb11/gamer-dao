@@ -67,7 +67,6 @@ function Header ({ onMenuClick }: Props) {
             )
             : <ConnectWallet />
           }
-        
         </div>
       </div>
     </StyledHeader>

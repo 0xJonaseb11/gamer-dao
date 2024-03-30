@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@q-dev/q-ui-kit';
 
 import Button from 'components/Button';
+import { StyledCustom } from 'components/styles';
 
 import ConnectWalletModal from './components/ConnectWalletModal';
-
-import { StyledCustom } from 'components/styles';
 
 function ConnectWallet () {
   const { t } = useTranslation();
@@ -23,16 +22,16 @@ function ConnectWallet () {
 
   return (
     <>
-    <StyledCustom>
-      <Button
-        alwaysEnabled
-        onClick={handleOpen}
-        className='MetaTheme'
-      >
-        <Icon name="wallet" />
-        <span>{t('CONNECT_WALLET')}</span>
-      </Button>
-    </StyledCustom>
+      <StyledCustom>
+        <Button
+          alwaysEnabled
+          className="MetaTheme"
+          onClick={handleOpen}
+        >
+          <Icon name="wallet" />
+          <span>{t('CONNECT_WALLET')}</span>
+        </Button>
+      </StyledCustom>
 
       <ConnectWalletModal modalOpen={modalOpen} onModalClose={handleClose} />
     </>

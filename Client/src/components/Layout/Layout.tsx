@@ -2,6 +2,7 @@ import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import NetworkWarning from 'components/NetworkWarning';
+import { StyledCustom } from 'components/styles';
 import SupportedDaoNetworks from 'components/SupportedDaoNetworks';
 import TransactionLoader from 'components/TransactionLoader';
 import Header from 'navigation/Header';
@@ -9,7 +10,6 @@ import Sidebar from 'navigation/Sidebar';
 import NotFound from 'pages/NotFound';
 
 import { AppContainer } from './styles';
-import { StyledCustom } from 'components/styles';
 
 import { useDaoStore } from 'store/dao/hooks';
 import { useProviderStore } from 'store/provider/hooks';

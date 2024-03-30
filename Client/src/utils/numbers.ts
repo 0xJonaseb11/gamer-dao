@@ -1,5 +1,5 @@
 import { toBigNumber } from '@q-dev/utils';
-import { BigNumber } from "bignumber.js";
+import { BigNumber } from 'bignumber.js';
 import { utils } from 'ethers';
 
 export function toWeiWithDecimals (value: number | string, decimals = 0) {
@@ -14,7 +14,7 @@ export function fromWeiWithDecimals (value: number | string, decimals = 0) {
     .toFixed();
 }
 
-export function toBN(value: string | number | BigNumber | bigint) {
+export function toBN (value: string | number | BigNumber | bigint) {
   if (typeof value === 'bigint') {
     value = value.toString();
   }
@@ -22,7 +22,7 @@ export function toBN(value: string | number | BigNumber | bigint) {
   return new BigNumber(value);
 }
 
-export function wei(value: string | number | bigint, decimal: number = 18): bigint {
+export function wei (value: string | number | bigint, decimal: number = 18): bigint {
   if (typeof value === 'number' || typeof value === 'bigint') {
     value = value.toString();
   }

@@ -3,9 +3,9 @@ import { HTMLAttributes } from 'react';
 import { Button as UiButton } from '@q-dev/q-ui-kit';
 import { ButtonLook } from '@q-dev/q-ui-kit/dist/components/Button/Button';
 
-import { useProviderStore } from 'store/provider/hooks';
-
 import { StyledCustom } from 'components/styles';
+
+import { useProviderStore } from 'store/provider/hooks';
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset';

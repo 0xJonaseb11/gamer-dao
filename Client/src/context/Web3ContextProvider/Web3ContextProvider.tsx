@@ -1,6 +1,8 @@
+/* eslint-disable no-use-before-define */
+// eslint-disable-next-line import/no-duplicates
 import React from 'react';
+// eslint-disable-next-line import/no-duplicates
 import { createContext, FC, ReactElement, useContext, useEffect, useMemo, useState } from 'react';
-
 
 import { useLocalStorage } from '@q-dev/react-hooks';
 import { ErrorHandler } from 'helpers';
